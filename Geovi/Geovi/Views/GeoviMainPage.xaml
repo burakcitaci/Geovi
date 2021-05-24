@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             xmlns:control="clr-namespace:Geovi.Controls"
+             BackgroundColor="{DynamicResource SecondaryBackgroundColour}"
+             xmlns:net="clr-namespace:Geovi.Net.ViewModels;assembly=Geovi.Net"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:viewModel="clr-namespace:Geovi.Net.ViewModels;assembly=Geovi.Net"
+             x:Class="Geovi.Views.GeoviMainPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="BackgroundColor">#333EBD</Color>
+            <Color x:Key="CellBackgroundColor">#2E249E</Color>
+            <Color x:Key="SwipeItemTextColor">#FFECCB</Color>
+            <Color x:Key="SwipeItemBackgroundColor">#FE744D</Color>
+            <Color x:Key="TitleColor">#55A1FA</Color>
+            <Color x:Key="SubTitleColor">#FFFFFF</Color>
+            <Style x:Key="SwipeItemBorderStyle" TargetType="BoxView">
+                <Setter Property="BackgroundColor" Value="{StaticResource SwipeItemBackgroundColor}" />
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="Margin" Value="5" />
+            </Style>
+
+            <Style x:Key="SwipeItemIconStyle" TargetType="Image">
+                <Setter Property="Aspect" Value="AspectFit" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="30" />
+            </Style>
+
+            <Style x:Key="SwipeItemTextStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource SwipeItemTextColor}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="0, 0, 0, 0" />
+            </Style>
+            <DataTemplate x:Key="MessageTemplate">
+                <SwipeView>
+                    <SwipeView.LeftItems>
+                        <SwipeItems Mode="Reveal">
+                            <SwipeItemView WidthRequest="50" HeightRequest="50" Padding="1">
+                                <Grid BackgroundColor="{StaticResource PrimaryBackgroundColour}">
+                                    <BoxView
+                                        Style="{StaticResource SwipeItemBorderStyle}"/>
+
+                                    <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type viewModel:GeoviMainPageViewModel}},
+            Path=DeleteIcon, Converter={StaticResource FFImageSourceConverter}}" HeightRequest="30" WidthRequest="30"
+                        HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit" />
+                                </Grid>
+                            </SwipeItemView>
+                            <SwipeItemView WidthRequest="75" Padding="1" HeightRequest="25">
+                                <Grid  
+                                    BackgroundColor="{StaticResource PrimaryBackgroundColour}">
+                                    <BoxView
+                                        Style="{StaticResource SwipeItemBorderStyle}"/>
+
+                                    <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type viewModel:GeoviMainPageViewModel}},
+            Path=FavoriteIcon, Converter={StaticResource FFImageSourceConverter}}" HeightRequest="30" WidthRequest="30"
+                        HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit" />
+                                   
+                                </Grid>
+                            </SwipeItemView>
+                        </SwipeItems>
+                    </SwipeView.LeftItems>
+                    <SwipeView.Content>
+                        <Grid ColumnDefinitions="*,*" Margin="0" Padding="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <BoxView BackgroundColor="#f5f6f9" 
+                                     CornerRadius="10" 
+                                     Grid.ColumnSpan="2" 
+                                     Grid.RowSpan="4"/>
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="{Binding LayerName}" 
+                                   Padding="10,5,0,0"
+                                   HorizontalOptions="StartAndExpand" 
+                                   VerticalOptions="Start" 
+                                   FontSize="14" 
+                                   FontFamily="RobotoRegular"
+                                   FontAttributes="Bold"/>
+                            <Label Grid.Row="0"
+                                   Grid.Column="1"
+                                   
+                                   Text="{Binding Path=ServiceType, 
+                            Converter={StaticResource EnumConverter}}" 
+                                   Padding="5,5,10,0"
+                                   HorizontalOptions="EndAndExpand" 
+                                   VerticalOptions="Start" 
+                                   FontSize="14" 
+                                    FontFamily="RobotoRegular"
+                                   FontAttributes="Bold"/>
+
+                            <Label Grid.Row="1"
+                                   Grid.ColumnSpan="2"
+                                   Text="{Binding ServiceUrl}" 
+                                   HorizontalOptions="StartAndExpand" 
+                                   VerticalOptions="Start" 
+                                   FontSize="12" 
+                                   FontFamily="RobotoThin"
+                                   Padding="10,0,0,0"
+                                   FontAttributes="Bold"/>
+                            <Label Grid.Row="2"
+                                   Grid.ColumnSpan="2"
+                                   Text="{Binding Description}" 
+                                   HorizontalOptions="StartAndExpand" 
+                                   VerticalOptions="Start" 
+                                   
+                                   FontSize="12" 
+                                   FontFamily="RobotoItalic"
+                                   Padding="10,0,0,10"/>
+                        </Grid>
+                    </SwipeView.Content>
+                </SwipeView>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="100,40,*" BackgroundColor="Transparent"  RowSpacing="0">
+        <control:AppBar VerticalOptions="Start" Grid.Row="0" Margin="0,0,0,10"/>
+        <BoxView Grid.Row="2" CornerRadius="20,20,0,0" 
+                 BackgroundColor="{DynamicResource PrimaryBackgroundColour}"/>
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding GeoviDataByTitle}"
+                        VerticalOptions="Center"
+                        HeightRequest="50">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.Header>
+                <StackLayout Spacing="0" Orientation="Horizontal">
+                    <BoxView HorizontalOptions="Start" WidthRequest="30" BackgroundColor="Transparent"/>
+                    <control:TabItem x:Name="tabItem1" 
+                                   Text="HOME" BindingContext="{x:Null}"
+                                   IsSelected="{Binding Source={RelativeSource AncestorType={x:Type viewModel:GeoviMainPageViewModel}}, 
+                                                Path=SelectedGeoviData, Converter={StaticResource SelectionConverter},
+                                                ConverterParameter={x:Reference tabItem1}}">
+                        <control:TabItem.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource 
+                                AncestorType={x:Type viewModel:GeoviMainPageViewModel}}, 
+                                Path=WfsDataSelectedCommand}"
+                                                  CommandParameter="{Binding .}"/>
+                        </control:TabItem.GestureRecognizers>
+                    </control:TabItem>
+                </StackLayout>
+            </CollectionView.Header>
+
+            <CollectionView.Footer>
+                <BoxView HorizontalOptions="Start" 
+                         WidthRequest="30" 
+                         BackgroundColor="Transparent"/>
+            </CollectionView.Footer>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <ContentView>
+                        <control:TabItem x:Name="tabItem" Text="{Binding .}" Margin="5,0,0,0"
+                                       IsSelected="{Binding Source={RelativeSource 
+                            AncestorType={x:Type  viewModel:GeoviMainPageViewModel}}, 
+                            Path=SelectedGeoviData, 
+                            Converter={StaticResource SelectionConverter}, 
+                            ConverterParameter={x:Reference tabItem}}">
+                            <control:TabItem.GestureRecognizers>
+                                <TapGestureRecognizer Command=
+                                                      "{Binding Source={RelativeSource 
+                                                        AncestorType={x:Type viewModel:GeoviMainPageViewModel}}, 
+                                                        Path=WfsDataSelectedCommand}"
+                                                      CommandParameter="{Binding .}"/>
+                            </control:TabItem.GestureRecognizers>
+                        </control:TabItem>
+                    </ContentView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <CollectionView x:Name="ItemsListView" 
+                        Grid.Row="2"
+                        ItemTemplate="{StaticResource MessageTemplate}"
+                        ItemsSource="{Binding GeoviDatas}"
+                        IsGrouped="True"
+                        Margin="25,25,25,0">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <control:CollectionViewHeader BindingContext="{Binding .}" TitleText="{Binding FilterName}" />
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+            
+        </CollectionView>
+    </Grid>
+</ContentPage>

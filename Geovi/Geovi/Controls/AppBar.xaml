@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:control="clr-namespace:Geovi.Controls"
+             xmlns:extension="clr-namespace:Geovi.Extensions"
+             x:Class="Geovi.Controls.AppBar">
+    <Grid Padding="{x:Static extension:AppBarExtension.Padding}" Margin="0,0,0,0">
+        <!--<Frame CornerRadius="5" Padding="0" Margin="24,0,0,0" HorizontalOptions="Start">
+            --><!--<ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type control:AppBar}},
+            Path=GeoviLogoImage, Converter={StaticResource FFImageSourceConverter}}"
+                        HorizontalOptions="Start" VerticalOptions="Center" Aspect="AspectFit" />--><!--
+            <Label Text="GEOVI" FontFamily="RobotoBold" FontSize="20" Style="{StaticResource TitleLabelStyle }"/>
+
+        </Frame>-->
+        <Label Text="GEOVI" FontFamily="MontserratRegular" FontAttributes="Bold" FontSize="Title" CharacterSpacing="2" HorizontalOptions="Start"  Margin="24,0,0,0" TextColor="White"/>
+        <StackLayout Orientation="Horizontal"
+                     HorizontalOptions="End" VerticalOptions="Center">
+            <Path Data="{StaticResource MagnifyingGlassGeometry}" Fill="#ffffff" Aspect="Uniform"
+                  VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="25" WidthRequest="25" Margin="10"/>
+            <Path Data="{StaticResource PlusIconGeometry}" Fill="#ffffff" Aspect="Uniform"
+                  VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="25" WidthRequest="25" Margin="10"/>
+
+            
+        </StackLayout>
+    </Grid>
+</ContentView>

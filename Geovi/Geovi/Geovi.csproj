@@ -11,7 +11,73 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1451" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <None Remove="Images\logo_header.png" />
+    <None Remove="Images\logo_large.png" />
+    <None Remove="Images\logo_transparent.png" />
+    <None Remove="Images\outline_add_task_black_20.png" />
+    <None Remove="Images\outline_delete_black_20.png" />
+    <None Remove="Images\outline_delete_forever_black_20.png" />
+    <None Remove="Images\outline_delete_white_24.png" />
+    <None Remove="Images\outline_star_rate_white_24.png" />
+    <None Remove="Resources\Fonts\Montserrat-Regular.ttf" />
+    <None Remove="Resources\Fonts\Roboto-Italic.ttf" />
+    <None Remove="Resources\Fonts\Roboto-Regular.ttf" />
+    <None Remove="Resources\Fonts\Roboto-Thin.ttf" />
+    <None Remove="Resources\Fonts\Roboto-ThinItalic.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Images\logo_header.png" />
+    <EmbeddedResource Include="Images\logo_large.png" />
+    <EmbeddedResource Include="Images\logo_transparent.png" />
+    <EmbeddedResource Include="Images\outline_add_task_black_20.png" />
+    <EmbeddedResource Include="Images\outline_delete_black_20.png" />
+    <EmbeddedResource Include="Images\outline_delete_forever_black_20.png" />
+    <EmbeddedResource Include="Images\outline_delete_white_24.png" />
+    <EmbeddedResource Include="Images\outline_star_rate_white_24.png" />
+    <EmbeddedResource Include="Resources\Fonts\Montserrat-Regular.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Roboto-Italic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Roboto-Regular.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Roboto-Thin.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Roboto-ThinItalic.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Esri.ArcGISRuntime.Xamarin.Forms" Version="100.11.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Geovi.Net\Geovi.Net.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="AppShell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\AppBar.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\CollectionViewHeader.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\TabbarView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\TabItem.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\GeoviMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Views\GeoviMainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
   </ItemGroup>
 </Project>
