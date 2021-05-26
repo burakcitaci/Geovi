@@ -11,13 +11,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\index.png" />
     <None Remove="Images\logo_header.png" />
     <None Remove="Images\logo_large.png" />
     <None Remove="Images\logo_transparent.png" />
     <None Remove="Images\outline_add_task_black_20.png" />
     <None Remove="Images\outline_delete_black_20.png" />
+    <None Remove="Images\outline_delete_black_36dp.png" />
     <None Remove="Images\outline_delete_forever_black_20.png" />
     <None Remove="Images\outline_delete_white_24.png" />
+    <None Remove="Images\outline_launch_black_36dp.png" />
+    <None Remove="Images\outline_new_label_white_36dp.png" />
     <None Remove="Images\outline_star_rate_white_24.png" />
     <None Remove="Resources\Fonts\Montserrat-Regular.ttf" />
     <None Remove="Resources\Fonts\Roboto-Italic.ttf" />
@@ -27,13 +31,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Images\index.png" />
     <EmbeddedResource Include="Images\logo_header.png" />
     <EmbeddedResource Include="Images\logo_large.png" />
     <EmbeddedResource Include="Images\logo_transparent.png" />
     <EmbeddedResource Include="Images\outline_add_task_black_20.png" />
     <EmbeddedResource Include="Images\outline_delete_black_20.png" />
+    <EmbeddedResource Include="Images\outline_delete_black_36dp.png" />
     <EmbeddedResource Include="Images\outline_delete_forever_black_20.png" />
     <EmbeddedResource Include="Images\outline_delete_white_24.png" />
+    <EmbeddedResource Include="Images\outline_launch_black_36dp.png" />
+    <EmbeddedResource Include="Images\outline_new_label_white_36dp.png" />
     <EmbeddedResource Include="Images\outline_star_rate_white_24.png" />
     <EmbeddedResource Include="Resources\Fonts\Montserrat-Regular.ttf" />
     <EmbeddedResource Include="Resources\Fonts\Roboto-Italic.ttf" />

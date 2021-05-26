@@ -40,10 +40,12 @@ namespace Geovi.Controls
       }
       public string HeaderIconAdd { get; set; }
       public string HeaderIconDelete { get; set; }
+      public string HeaderIconLaunch { get; set; }
       public CollectionViewHeader()
       {
          HeaderIconAdd = "outline_add_task_black_20.png";
-         HeaderIconDelete = "outline_delete_forever_black_20.png";
+         HeaderIconDelete = "outline_delete_black_36dp.png";
+         HeaderIconLaunch = "outline_launch_black_36dp.png";
          InitializeComponent();
          //this.headerLabel.Text = "TitleText";
       }

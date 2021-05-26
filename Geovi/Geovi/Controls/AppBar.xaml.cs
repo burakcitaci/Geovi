@@ -14,12 +14,13 @@ namespace Geovi.Controls
    {
 
       public string GeoviLogoImage { get; set; }
-      public string AvatarImage { get; set; }
-
+      public string HeaderIconAdd { get; set; }
       public AppBar()
       {
          GeoviLogoImage = "logo_header.png";
-         
+         HeaderIconAdd = "outline_new_label_white_36dp.png";
+
+
          InitializeComponent();
       }
    }

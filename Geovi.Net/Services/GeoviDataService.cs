@@ -13,7 +13,7 @@ namespace Geovi.Net.Services
       {
          geoviDatasBy = new List<GeoviDataBy>
          {
-            new GeoviDataBy("LayerName")
+            new GeoviDataBy("Layer Name")
             {
                
                new GeoviData()
@@ -33,7 +33,26 @@ namespace Geovi.Net.Services
                   Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. "
                }
             },
-            new GeoviDataBy("LayerTitle")
+            new GeoviDataBy("Layer Title")
+            {
+
+               new GeoviData()
+               {
+                  Title = "Hello World",
+                  ServiceUrl = new Uri("https://www.ssport.tv/yayin-akisi"),
+                  ServiceType = Enums.ServiceType.FeatueService,
+                  LayerName = "Map"
+               },
+                new GeoviData()
+               {
+                  Title = "Hello World",
+                  ServiceUrl = new Uri("https://www.ssport.tv/yayin-akisi"),
+                  ServiceType = Enums.ServiceType.FeatueService,
+                  LayerName = "Android"
+               }
+            },
+
+            new GeoviDataBy("Lorem Ipsum")
             {
 
                new GeoviData()

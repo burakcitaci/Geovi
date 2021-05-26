@@ -21,6 +21,8 @@
                 <Setter Property="BackgroundColor" Value="{StaticResource SwipeItemBackgroundColor}" />
                 <Setter Property="CornerRadius" Value="5" />
                 <Setter Property="Margin" Value="5" />
+                <Setter Property="WidthRequest" Value="50"/>
+                <Setter Property="HeightRequest" Value="50"/>
             </Style>
 
             <Style x:Key="SwipeItemIconStyle" TargetType="Image">
@@ -41,8 +43,12 @@
             <DataTemplate x:Key="MessageTemplate">
                 <SwipeView>
                     <SwipeView.LeftItems>
-                        <SwipeItems Mode="Reveal">
-                            <SwipeItemView WidthRequest="50" HeightRequest="50" Padding="1">
+                        <SwipeItems Mode="Execute">
+                            <SwipeItem Text="Hello"
+                                       BackgroundColor="{StaticResource DetailColour}"/>
+                        </SwipeItems>
+                        <!--<SwipeItems Mode="Execute">
+                            <SwipeItemView>
                                 <Grid BackgroundColor="{StaticResource PrimaryBackgroundColour}">
                                     <BoxView
                                         Style="{StaticResource SwipeItemBorderStyle}"/>
@@ -52,20 +58,26 @@
                         HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit" />
                                 </Grid>
                             </SwipeItemView>
-                            <SwipeItemView WidthRequest="75" Padding="1" HeightRequest="25">
-                                <Grid  
+                            <SwipeItemView>
+                                <Grid 
                                     BackgroundColor="{StaticResource PrimaryBackgroundColour}">
-                                    <BoxView
-                                        Style="{StaticResource SwipeItemBorderStyle}"/>
+                                    <BoxView Style="{StaticResource SwipeItemBorderStyle}"/>
 
-                                    <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type viewModel:GeoviMainPageViewModel}},
-            Path=FavoriteIcon, Converter={StaticResource FFImageSourceConverter}}" HeightRequest="30" WidthRequest="30"
+                                    <ff:CachedImage Source="{Binding Source={RelativeSource 
+                                        AncestorType={x:Type viewModel:GeoviMainPageViewModel}},
+                                        Path=FavoriteIcon, Converter={StaticResource FFImageSourceConverter}}" 
+                                                    HeightRequest="30" WidthRequest="30"
                         HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit" />
                                    
                                 </Grid>
                             </SwipeItemView>
-                        </SwipeItems>
+                        </SwipeItems>-->
                     </SwipeView.LeftItems>
+                    <SwipeView.RightItems>
+                        <SwipeItems Mode="Execute">
+                            <SwipeItem Text="World" BackgroundColor="LightPink" />
+                        </SwipeItems>
+                    </SwipeView.RightItems>
                     <SwipeView.Content>
                         <Grid ColumnDefinitions="*,*" Margin="0" Padding="5">
                             <Grid.RowDefinitions>
@@ -124,7 +136,9 @@
     </ContentPage.Resources>
     <Grid RowDefinitions="100,40,*" BackgroundColor="Transparent"  RowSpacing="0">
         <control:AppBar VerticalOptions="Start" Grid.Row="0" Margin="0,0,0,10"/>
-        <BoxView Grid.Row="2" CornerRadius="20,20,0,0" 
+        <BoxView Grid.Row="2" 
+                 CornerRadius="20,20,0,0" 
+                 Margin="10,0,10,0"
                  BackgroundColor="{DynamicResource PrimaryBackgroundColour}"/>
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding GeoviDataByTitle}"
