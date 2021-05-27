@@ -21,6 +21,7 @@
     <None Remove="Images\outline_delete_forever_black_20.png" />
     <None Remove="Images\outline_delete_white_24.png" />
     <None Remove="Images\outline_launch_black_36dp.png" />
+    <None Remove="Images\outline_library_add_white_24dp.png" />
     <None Remove="Images\outline_new_label_white_36dp.png" />
     <None Remove="Images\outline_star_rate_white_24.png" />
     <None Remove="Resources\Fonts\Montserrat-Regular.ttf" />
@@ -41,6 +42,7 @@
     <EmbeddedResource Include="Images\outline_delete_forever_black_20.png" />
     <EmbeddedResource Include="Images\outline_delete_white_24.png" />
     <EmbeddedResource Include="Images\outline_launch_black_36dp.png" />
+    <EmbeddedResource Include="Images\outline_library_add_white_24dp.png" />
     <EmbeddedResource Include="Images\outline_new_label_white_36dp.png" />
     <EmbeddedResource Include="Images\outline_star_rate_white_24.png" />
     <EmbeddedResource Include="Resources\Fonts\Montserrat-Regular.ttf" />

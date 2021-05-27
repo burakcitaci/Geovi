@@ -3,15 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace Geovi.Net.Services
 {
    public class GeoviDataService : IGeoviDataService
    {
-      IEnumerable<GeoviDataBy> geoviDatasBy;
+      ObservableCollection<GeoviDataBy> geoviDatasBy;
       public GeoviDataService()
       {
-         geoviDatasBy = new List<GeoviDataBy>
+         geoviDatasBy = new ObservableCollection<GeoviDataBy>
          {
             new GeoviDataBy("Layer Name")
             {
@@ -22,7 +23,8 @@ namespace Geovi.Net.Services
                   ServiceUrl = new Uri("https://www.ssport.tv/yayin-akisi"),
                   ServiceType = Enums.ServiceType.FeatueService,
                   LayerName = "Map",
-                  Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. "
+                  Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. ",
+                  ParentName="Layer Name"
                },
                 new GeoviData()
                {
@@ -30,7 +32,8 @@ namespace Geovi.Net.Services
                   ServiceUrl = new Uri("https://www.ssport.tv/yayin-akisi"),
                   ServiceType = Enums.ServiceType.FeatueService,
                   LayerName = "Android",
-                  Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. "
+                  Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. ",
+                  ParentName="Layer Name"
                }
             },
             new GeoviDataBy("Layer Title")
@@ -41,14 +44,16 @@ namespace Geovi.Net.Services
                   Title = "Hello World",
                   ServiceUrl = new Uri("https://www.ssport.tv/yayin-akisi"),
                   ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Map"
+                  LayerName = "Map",
+                  ParentName="Layer Title"
                },
                 new GeoviData()
                {
                   Title = "Hello World",
                   ServiceUrl = new Uri("https://www.ssport.tv/yayin-akisi"),
                   ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Android"
+                  LayerName = "Android",
+                  ParentName="Layer Title"
                }
             },
 
@@ -60,38 +65,42 @@ namespace Geovi.Net.Services
                   Title = "Hello World",
                   ServiceUrl = new Uri("https://www.ssport.tv/yayin-akisi"),
                   ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Map"
+                  LayerName = "Map",
+                  ParentName="Lorem Ipsum"
                },
                 new GeoviData()
                {
                   Title = "Hello World",
                   ServiceUrl = new Uri("https://www.ssport.tv/yayin-akisi"),
                   ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Android"
+                  LayerName = "Android",
+                  ParentName="Lorem Ipsum"
                }
             }
          };
       }
-      public IEnumerable<GeoviData> GetAll()
+      public ObservableCollection<GeoviData> GetAll()
       {
-         return (from geovi in geoviDatasBy
+         return ((ObservableCollection<GeoviData>)(from geovi in geoviDatasBy
                  from data in geovi
-                 select data).ToList();
+                 select data));
       }
 
-      public IEnumerable<GeoviDataBy> GetBy(string parameter)
+      public ObservableCollection<GeoviDataBy> GetBy(string parameter)
       {
-         return geoviDatasBy.Where(x => x.FilterBy == "LayerName");
+         return new ObservableCollection<GeoviDataBy>(geoviDatasBy.Where(x => x.FilterBy == parameter));
       }
 
-      public IEnumerable<GeoviDataBy> GetAllBy()
+      public ObservableCollection<GeoviDataBy> GetAllBy()
       {
          return geoviDatasBy;
       }
 
-      public IEnumerable<string> GetGeoviDataTitles()
+      public ObservableCollection<string> GetGeoviDataTitles()
       {
-         return geoviDatasBy.Select(x => x.FilterName).ToList();
+         var t = geoviDatasBy.Select(x => x.FilterName);
+         var observable = new ObservableCollection<string>(t);
+         return observable;
       }
    }
 }

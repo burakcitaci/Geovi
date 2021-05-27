@@ -1,6 +1,7 @@
 ﻿using Geovi.Net.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Geovi.Net.IViewModels
@@ -9,9 +10,9 @@ namespace Geovi.Net.IViewModels
    {
       string Title { get; }
 
-      IEnumerable<GeoviDataBy> GeoviDatas { get; set; }
+      ObservableCollection<GeoviDataBy> GeoviDatas { get; set; }
 
-      IEnumerable<string> GeoviDataByTitle { get; set; }
+      ObservableCollection<string> GeoviDataByTitle { get; set; }
 
       string SelectedGeoviData { get; set; }
       string DeleteIcon { get; }

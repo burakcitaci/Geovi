@@ -1,17 +1,19 @@
 ﻿using Geovi.Net.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Geovi.Net.Services
 {
    public interface IGeoviDataService
    {
-      IEnumerable<GeoviData> GetAll();
+      ObservableCollection<GeoviData> GetAll();
 
-      IEnumerable<GeoviDataBy> GetBy(string parameter);
+      ObservableCollection<GeoviDataBy> GetBy(string parameter);
 
-      IEnumerable<string> GetGeoviDataTitles();
-      IEnumerable<GeoviDataBy> GetAllBy();
+      ObservableCollection<string> GetGeoviDataTitles();
+
+      ObservableCollection<GeoviDataBy> GetAllBy();
    }
 }

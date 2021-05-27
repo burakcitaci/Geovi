@@ -18,7 +18,7 @@ namespace Geovi.Controls
       public AppBar()
       {
          GeoviLogoImage = "logo_header.png";
-         HeaderIconAdd = "outline_new_label_white_36dp.png";
+         HeaderIconAdd = "outline_library_add_white_24dp.png";
 
 
          InitializeComponent();

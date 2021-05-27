@@ -39,6 +39,7 @@
         <converter:FFImageSourceConverter x:Key="FFImageSourceConverter"/>
         <converter:SelectionConverter x:Key="SelectionConverter"/>
         <converter:EnumConverter x:Key="EnumConverter"/>
+        <converter:SwipeItemConverter x:Key="SwipeItemConverter" />
 
 
 
@@ -47,6 +48,7 @@
         <Color x:Key="PrimaryBackgroundColour">#ffffff</Color>
         <Color x:Key="SecondaryBackgroundColour">#2e2545</Color>
         <Color x:Key="DetailColour">#FD7B38</Color>
+        <Color x:Key="DeleteColour">#ff3333</Color>
 
         <SolidColorBrush x:Key="IconGrayBrush" Color="#7e90a1" />
         <SolidColorBrush x:Key="PrimaryBackgroundBrush" Color="{DynamicResource PrimaryBackgroundColour}"/>

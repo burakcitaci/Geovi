@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 namespace Geovi.Net.ViewModels
 {
@@ -14,8 +15,8 @@ namespace Geovi.Net.ViewModels
    {
       public string Title { get => "HelloWorld"; }
 
-      private IEnumerable<GeoviDataBy> geoviDatas;
-      public IEnumerable<GeoviDataBy> GeoviDatas 
+      private ObservableCollection<GeoviDataBy> geoviDatas;
+      public ObservableCollection<GeoviDataBy> GeoviDatas 
       {
          get => geoviDatas;
          set
@@ -25,8 +26,8 @@ namespace Geovi.Net.ViewModels
          }
       }
 
-      private IEnumerable<string> geoviDataByTitle;
-      public IEnumerable<string> GeoviDataByTitle
+      private ObservableCollection<string> geoviDataByTitle;
+      public ObservableCollection<string> GeoviDataByTitle
       {
          get => geoviDataByTitle;
          set
@@ -59,11 +60,11 @@ namespace Geovi.Net.ViewModels
             if (SelectedGeoviData == null)
                GeoviDatas = geoviDataService.GetAllBy();
             else
-               GeoviDatas = geoviDataService.GetAllBy().Where(x => x.FilterName == SelectedGeoviData).ToList();
+               GeoviDatas = (ObservableCollection<GeoviDataBy>)geoviDataService.GetBy(SelectedGeoviData);
          });
 
          //GeoviDatas = geoviDataService.GetAllBy();
-         GeoviDataByTitle = geoviDataService.GetGeoviDataTitles();
+         GeoviDataByTitle = (ObservableCollection<string>)geoviDataService.GetGeoviDataTitles();
       }
    }
 }

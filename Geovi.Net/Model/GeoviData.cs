@@ -16,5 +16,7 @@ namespace Geovi.Net.Model
       public string LayerName { get; set; }
 
       public string Description { get; set; }
+
+      public string ParentName { get; set; }
    }
 }

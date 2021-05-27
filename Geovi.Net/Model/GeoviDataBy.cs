@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Geovi.Net.Model
 {
-   public class GeoviDataBy : List<GeoviData>
+   public class GeoviDataBy : ObservableCollection<GeoviData>
    {
       public string FilterBy;
 

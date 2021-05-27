@@ -44,38 +44,18 @@
                 <SwipeView>
                     <SwipeView.LeftItems>
                         <SwipeItems Mode="Execute">
-                            <SwipeItem Text="Hello"
-                                       BackgroundColor="{StaticResource DetailColour}"/>
+
+                            <SwipeItem Text="{Binding Path=LayerName, Converter={StaticResource SwipeItemConverter}, ConverterParameter='Favorite'}" x:Name="addToFavorite"
+                                       BackgroundColor="{StaticResource DetailColour}"
+                                       Invoked="deleteLayer_Invoked" BindingContext="{Binding .}"/>
                         </SwipeItems>
-                        <!--<SwipeItems Mode="Execute">
-                            <SwipeItemView>
-                                <Grid BackgroundColor="{StaticResource PrimaryBackgroundColour}">
-                                    <BoxView
-                                        Style="{StaticResource SwipeItemBorderStyle}"/>
-
-                                    <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type viewModel:GeoviMainPageViewModel}},
-            Path=DeleteIcon, Converter={StaticResource FFImageSourceConverter}}" HeightRequest="30" WidthRequest="30"
-                        HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit" />
-                                </Grid>
-                            </SwipeItemView>
-                            <SwipeItemView>
-                                <Grid 
-                                    BackgroundColor="{StaticResource PrimaryBackgroundColour}">
-                                    <BoxView Style="{StaticResource SwipeItemBorderStyle}"/>
-
-                                    <ff:CachedImage Source="{Binding Source={RelativeSource 
-                                        AncestorType={x:Type viewModel:GeoviMainPageViewModel}},
-                                        Path=FavoriteIcon, Converter={StaticResource FFImageSourceConverter}}" 
-                                                    HeightRequest="30" WidthRequest="30"
-                        HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit" />
-                                   
-                                </Grid>
-                            </SwipeItemView>
-                        </SwipeItems>-->
                     </SwipeView.LeftItems>
                     <SwipeView.RightItems>
                         <SwipeItems Mode="Execute">
-                            <SwipeItem Text="World" BackgroundColor="LightPink" />
+
+                            <SwipeItem Text="{Binding Path=LayerName, Converter={StaticResource SwipeItemConverter}}" x:Name="deleteLayer"
+                                       BackgroundColor="{StaticResource DeleteColour}"
+                                       Invoked="addToFavorite_Invoked"  BindingContext="{Binding .}"/>
                         </SwipeItems>
                     </SwipeView.RightItems>
                     <SwipeView.Content>
