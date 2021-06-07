@@ -8,6 +8,7 @@
              xmlns:net="clr-namespace:Geovi.Net.ViewModels;assembly=Geovi.Net"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:viewModel="clr-namespace:Geovi.Net.ViewModels;assembly=Geovi.Net"
+             xmlns:views ="clr-namespace:Geovi.Views"
              x:Class="Geovi.Views.GeoviMainPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -42,22 +43,22 @@
             </Style>
             <DataTemplate x:Key="MessageTemplate">
                 <SwipeView>
-                    <SwipeView.LeftItems>
-                        <SwipeItems Mode="Execute">
-
-                            <SwipeItem Text="{Binding Path=LayerName, Converter={StaticResource SwipeItemConverter}, ConverterParameter='Favorite'}" x:Name="addToFavorite"
-                                       BackgroundColor="{StaticResource DetailColour}"
-                                       Invoked="deleteLayer_Invoked" BindingContext="{Binding .}"/>
-                        </SwipeItems>
-                    </SwipeView.LeftItems>
                     <SwipeView.RightItems>
                         <SwipeItems Mode="Execute">
-
                             <SwipeItem Text="{Binding Path=LayerName, Converter={StaticResource SwipeItemConverter}}" x:Name="deleteLayer"
                                        BackgroundColor="{StaticResource DeleteColour}"
                                        Invoked="addToFavorite_Invoked"  BindingContext="{Binding .}"/>
                         </SwipeItems>
                     </SwipeView.RightItems>
+                    <SwipeView.LeftItems>
+                        <SwipeItems Mode="Execute">
+                            <SwipeItem x:Name="editLayer"
+                                       Text="{Binding Path=LayerName, Converter={StaticResource SwipeItemConverter}, ConverterParameter='edit'}"
+                                       BackgroundColor="{StaticResource DetailColour}"
+                                       Invoked="addToFavorite_Invoked"  
+                                       BindingContext="{Binding .}"/>
+                        </SwipeItems>
+                    </SwipeView.LeftItems>
                     <SwipeView.Content>
                         <Grid ColumnDefinitions="*,*" Margin="0" Padding="5">
                             <Grid.RowDefinitions>
@@ -115,15 +116,14 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid RowDefinitions="100,40,*" BackgroundColor="Transparent"  RowSpacing="0">
-        <control:AppBar VerticalOptions="Start" Grid.Row="0" Margin="0,0,0,10"/>
+        <control:AppBar VerticalOptions="Start" />
         <BoxView Grid.Row="2" 
                  CornerRadius="20,20,0,0" 
-                 Margin="10,0,10,0"
+                 Margin="0"
                  BackgroundColor="{DynamicResource PrimaryBackgroundColour}"/>
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding GeoviDataByTitle}"
-                        VerticalOptions="Center"
-                        HeightRequest="50">
+                        VerticalOptions="Center">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Horizontal"/>
             </CollectionView.ItemsLayout>
@@ -139,7 +139,7 @@
                         <control:TabItem.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource 
                                 AncestorType={x:Type viewModel:GeoviMainPageViewModel}}, 
-                                Path=WfsDataSelectedCommand}"
+                                Path=GeoviDataSelectedCommand}"
                                                   CommandParameter="{Binding .}"/>
                         </control:TabItem.GestureRecognizers>
                     </control:TabItem>
@@ -164,7 +164,7 @@
                                 <TapGestureRecognizer Command=
                                                       "{Binding Source={RelativeSource 
                                                         AncestorType={x:Type viewModel:GeoviMainPageViewModel}}, 
-                                                        Path=WfsDataSelectedCommand}"
+                                                        Path=GeoviDataSelectedCommand}"
                                                       CommandParameter="{Binding .}"/>
                             </control:TabItem.GestureRecognizers>
                         </control:TabItem>
@@ -178,13 +178,21 @@
                         ItemTemplate="{StaticResource MessageTemplate}"
                         ItemsSource="{Binding GeoviDatas}"
                         IsGrouped="True"
-                        Margin="25,25,25,0">
+                        Margin="20,0,20,10">
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
-                    <control:CollectionViewHeader BindingContext="{Binding .}" TitleText="{Binding FilterName}" />
+                    <control:CollectionViewHeader BindingContext="{Binding . }" TitleText="{Binding FilterName}" />
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
-            
+            <CollectionView.Header>
+                <BoxView VerticalOptions="Start" HeightRequest="25"/>
+            </CollectionView.Header>
+            <CollectionView.Footer>
+                <BoxView VerticalOptions="Start" HeightRequest="90"/>
+            </CollectionView.Footer>
         </CollectionView>
+        <BoxView Grid.Row="2" BackgroundColor="{DynamicResource SecondaryBackgroundColour}" VerticalOptions="Start" HeightRequest="36"
+                 Clip="{Binding CollectionViewClip, Source={RelativeSource AncestorType={x:Type views:GeoviMainPage}}}"/>
+
     </Grid>
 </ContentPage>

@@ -22,13 +22,13 @@ namespace Geovi.Controls
          _ = ChangeIconsSelection(matchesGrid);
       }
 
-      private void MatchesTapped(object sender, EventArgs e)
+      private void MainPageTapped(object sender, EventArgs e)
       {
          _ = ChangeIconsSelection(sender as Grid);
-         Shell.Current.GoToAsync("///" + PagesEnum.SettingsPage.ToString());
+         Shell.Current.GoToAsync("///" + PagesEnum.GeoviMainPage.ToString());
       }
 
-      private void CalendarTapped(object sender, EventArgs e)
+      private void SettingsTapped(object sender, EventArgs e)
       {
          _ = ChangeIconsSelection(sender as Grid);
          Shell.Current.GoToAsync("///" + PagesEnum.SettingsPage.ToString());
@@ -38,12 +38,6 @@ namespace Geovi.Controls
       {
          _ = ChangeIconsSelection(sender as Grid);
          Shell.Current.GoToAsync("///" + PagesEnum.FavoritesPage.ToString());
-      }
-
-      private void CupTapped(object sender, EventArgs e)
-      {
-         _ = ChangeIconsSelection(sender as Grid);
-         Shell.Current.GoToAsync("///" + PagesEnum.CupPage.ToString());
       }
 
       private async Task ChangeIconsSelection(Grid selectedGrid)

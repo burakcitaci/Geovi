@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Geovi.Views.SettingsPage"
+              Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             xmlns:controls="clr-namespace:Geovi.Views"
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             BackgroundColor="{DynamicResource SecondaryBackgroundColour}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="MessageTemplate">
+            <Grid ColumnDefinitions="*,*" Margin="0" Padding="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <BoxView BackgroundColor="#f5f6f9" 
+                                     CornerRadius="10" 
+                                     Grid.ColumnSpan="2" 
+                                     Grid.RowSpan="4"/>
+                <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="{Binding LayerName}" 
+                                   Padding="10,5,0,0"
+                                   HorizontalOptions="StartAndExpand" 
+                                   VerticalOptions="Start" 
+                                   FontSize="14" 
+                                   FontFamily="RobotoRegular"
+                                   FontAttributes="Bold"/>
+                <Label Grid.Row="0"
+                                   Grid.Column="1"
+                                   
+                                   Text="{Binding Path=ServiceType, 
+                            Converter={StaticResource EnumConverter}}" 
+                                   Padding="5,5,10,0"
+                                   HorizontalOptions="EndAndExpand" 
+                                   VerticalOptions="Start" 
+                                   FontSize="14" 
+                                    FontFamily="RobotoRegular"
+                                   FontAttributes="Bold"/>
+
+                <Label Grid.Row="1"
+                                   Grid.ColumnSpan="2"
+                                   Text="{Binding ServiceUrl}" 
+                                   HorizontalOptions="StartAndExpand" 
+                                   VerticalOptions="Start" 
+                                   FontSize="12" 
+                                   FontFamily="RobotoThin"
+                                   Padding="10,0,0,0"
+                                   FontAttributes="Bold"/>
+                <Label Grid.Row="2"
+                                   Grid.ColumnSpan="2"
+                                   Text="{Binding Description}" 
+                                   HorizontalOptions="StartAndExpand" 
+                                   VerticalOptions="Start" 
+                                   
+                                   FontSize="12" 
+                                   FontFamily="RobotoItalic"
+                                   Padding="10,0,0,10"/>
+            </Grid>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="100,auto,auto" RowSpacing="0">
+        <CollectionView x:Name="ItemsListView" 
+                        Grid.Row="1"
+                        ItemsSource="{Binding GeoviDatas}"
+                        IsGrouped="True"
+                        Margin="20,0,20,10">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="0.60*,0.40*" >
+                        <StackLayout Orientation="Horizontal" Grid.Column="0">
+                        </StackLayout>
+                    </Grid>
+
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+            <CollectionView.Header>
+                <BoxView VerticalOptions="Start" HeightRequest="25"/>
+            </CollectionView.Header>
+            <CollectionView.Footer>
+                <BoxView VerticalOptions="Start" HeightRequest="90"/>
+            </CollectionView.Footer>
+        </CollectionView>
+        <StackLayout Grid.Row="0" Margin="24,0,10,20" Orientation="Horizontal">
+            <Label
+                Text="SETTINGS" 
+                Style="{StaticResource TitleStyle}" 
+                TextColor="White" />
+            <Path Data="{StaticResource SettingsIconGeometry}" Style="{StaticResource DefaultPathStyle}" 
+                  HorizontalOptions="EndAndExpand" VerticalOptions="EndAndExpand"/>
+        </StackLayout>
+        <BoxView Grid.Row="1" 
+                 Grid.RowSpan="3"
+                 CornerRadius="20,20,0,0" 
+                 Margin="0"
+                 
+                 BackgroundColor="{DynamicResource PrimaryBackgroundColour}"/>
+        <!--<StackLayout Grid.Row="2" Margin="20" Orientation="Vertical" VerticalOptions="StartAndExpand" BackgroundColor="LightYellow">
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Layer Settings" Style="{StaticResource TitleStyleSetting}" />
+
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <BoxView HeightRequest="20" 
+                         WidthRequest="20" 
+                         BackgroundColor="Green" 
+                         HorizontalOptions="Start" />
+                <Label Text="Selection" HorizontalOptions="Start" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <BoxView HeightRequest="20" 
+                         WidthRequest="20" 
+                         BackgroundColor="Green" 
+                         HorizontalOptions="Start" />
+                <Label Text="Background Color" HorizontalOptions="Start" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <ff:CachedImage Source="{Binding Source={RelativeSource 
+                    AncestorType={x:Type controls:SettingsPage}},
+            Path=HeaderIconLaunch, Converter={StaticResource FFImageSourceConverter}}" 
+                        HorizontalOptions="Start" VerticalOptions="Center" BackgroundColor="RosyBrown" Aspect="AspectFit"  HeightRequest="25" WidthRequest="25"/>
+
+                <Label Text="Zoom level" HorizontalOptions="Start" VerticalOptions="Center" />
+                <Entry HorizontalOptions=
+                           "EndAndExpand" 
+                           WidthRequest="50" VerticalOptions="Center" BackgroundColor="Magenta"/>
+            </StackLayout>
+            <Label Text="Lorem ipsum" />
+            <BoxView BackgroundColor="Red" HeightRequest="1" />
+        </StackLayout>-->
+       
+    </Grid>
+</ContentPage>

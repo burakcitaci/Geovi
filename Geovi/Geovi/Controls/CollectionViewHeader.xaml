@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Geovi.Controls.CollectionViewHeader"
              xmlns:control="clr-namespace:Geovi.Controls"
+             xmlns:viewModel="clr-namespace:Geovi.Net.ViewModels;assembly=Geovi.Net"
              xmlns:sh="clr-namespace:Sharpnado.Shades;assembly=Sharpnado.Shadows"
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
     <ContentView.Resources>
@@ -40,25 +41,45 @@
                 <Setter Property="WidthRequest" Value="50"/>
             </Style>
     </ContentView.Resources>
-    <Grid ColumnDefinitions="0.70*,0.10*,0.10*,0.10*" >
+    <Grid ColumnDefinitions="0.60*,0.40*" >
         <StackLayout Orientation="Horizontal" Grid.Column="0">
-            <Label Margin="0,5" x:Name="headerLabel" HorizontalOptions="Start"
-                               TextColor="{StaticResource DetailColour}" FontAttributes="Bold"  FontFamily="RobotoRegular" FontSize="20"/>
-
-            
+            <Label Margin="0,5" 
+                   x:Name="headerLabel" 
+                   HorizontalOptions="Start"
+                   TextColor="{StaticResource DetailColour}" 
+                   FontAttributes="Bold"  
+                   FontFamily="MontserratRegular" 
+                   FontSize="20"/>
         </StackLayout>
-        <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type control:CollectionViewHeader}},
+        <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End">
+            <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type control:CollectionViewHeader}},
             Path=HeaderIconLaunch, Converter={StaticResource FFImageSourceConverter}}" 
-                        HorizontalOptions="Start" VerticalOptions="Center" Grid.Column="1" Aspect="AspectFit"  HeightRequest="25" WidthRequest="25"/>
+                        HorizontalOptions="End" VerticalOptions="Center" Aspect="AspectFit"  HeightRequest="25" WidthRequest="25"/>
 
-        <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type control:CollectionViewHeader}},
-            Path=HeaderIconAdd, Converter={StaticResource FFImageSourceConverter}}" Grid.Column="2"
+            <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type control:CollectionViewHeader}},
+            Path=HeaderIconAdd, Converter={StaticResource FFImageSourceConverter}}"
                         HorizontalOptions="End" VerticalOptions="Center" Aspect="AspectFit"  HeightRequest="25" WidthRequest="25"/>
 
 
-        <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type control:CollectionViewHeader}},
-            Path=HeaderIconDelete, Converter={StaticResource FFImageSourceConverter}}" Grid.Column="3" HeightRequest="25" WidthRequest="25"
-                        HorizontalOptions="End" VerticalOptions="Center" Aspect="AspectFit" />
+            <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type control:CollectionViewHeader}},
+            Path=HeaderIconDelete, Converter={StaticResource FFImageSourceConverter}}" 
+                      
+                        HeightRequest="25" 
+                        WidthRequest="25"
+                        HorizontalOptions="End" 
+                        VerticalOptions="Center" 
+                        Aspect="AspectFit">
+                <ff:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource 
+                                                        AncestorType={x:Type viewModel:GeoviMainPageViewModel}}, 
+                                                        Path=GeoviDataDeleteCommand}"
+                                                      CommandParameter="{Binding .}"/>
+                </ff:CachedImage.GestureRecognizers>
+            </ff:CachedImage>
+            <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type control:CollectionViewHeader}},
+            Path=HeaderIconStar, Converter={StaticResource FFImageSourceConverter}}"
+                        HorizontalOptions="End" VerticalOptions="Center" Aspect="AspectFit"  HeightRequest="25" WidthRequest="25"/>
+        </StackLayout>
     </Grid>
 
 </ContentView>

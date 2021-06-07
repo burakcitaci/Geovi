@@ -53,7 +53,7 @@
             </sh:Shadows>
 
             <Grid.GestureRecognizers>
-                <TapGestureRecognizer Tapped="MatchesTapped"/>
+                <TapGestureRecognizer Tapped="MainPageTapped"/>
             </Grid.GestureRecognizers>
         </Grid>
 
@@ -76,10 +76,11 @@
             </Grid.GestureRecognizers>
         </Grid>
 
-        <Grid Grid.Column="2" x:Name="cupGrid">
+        <Grid Grid.Column="2" x:Name="settingsGrid">
             <Grid Style="{StaticResource IconGridStyle}">
                 <Ellipse Fill="{DynamicResource PrimaryBackgroundBrush}"/>
-                <Path Data="{StaticResource SettingsIconGeometry}" Style="{StaticResource DefaultPathStyle}"/>
+                <Path Data="{StaticResource SettingsIconGeometry}" 
+                      Style="{StaticResource DefaultPathStyle}"/>
             </Grid>
             <sh:Shadows Style="{StaticResource SelectedShadowsStyle}">
                 <Grid Style="{StaticResource IconGridStyle}">
@@ -89,7 +90,7 @@
             </sh:Shadows>
 
             <Grid.GestureRecognizers>
-                <TapGestureRecognizer Tapped="CupTapped"/>
+                <TapGestureRecognizer Tapped="SettingsTapped"/>
             </Grid.GestureRecognizers>
         </Grid>
     </Grid>

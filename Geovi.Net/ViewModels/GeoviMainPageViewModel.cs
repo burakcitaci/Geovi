@@ -50,21 +50,39 @@ namespace Geovi.Net.ViewModels
       public string DeleteIcon { get => "outline_delete_white_24.png"; }
 
       public string FavoriteIcon { get => "outline_star_rate_white_24.png"; }
-      public ICommand WfsDataSelectedCommand { get; private set; }
+      public ICommand GeoviDataSelectedCommand { get; set; }
+      public ICommand GeoviDataDeleteCommand { get; set; }
+      public IGeoviDataService GeoviDataService { get; set; }
+
       public GeoviMainPageViewModel(INavigationService navigationService, IGeoviDataService geoviDataService)
       {
+         GeoviDataService = geoviDataService;
          GeoviDatas = geoviDataService.GetAllBy();
-         WfsDataSelectedCommand = new RelayCommand(parameter =>
-         {
-            SelectedGeoviData = parameter != null ? parameter.ToString() : null;
-            if (SelectedGeoviData == null)
-               GeoviDatas = geoviDataService.GetAllBy();
-            else
-               GeoviDatas = (ObservableCollection<GeoviDataBy>)geoviDataService.GetBy(SelectedGeoviData);
-         });
+         GeoviDataSelectedCommand = new RelayCommand(this.SelectedCommandFunc);
 
+         GeoviDataDeleteCommand = new RelayCommand(this.DeleteCommandFunc);
          //GeoviDatas = geoviDataService.GetAllBy();
          GeoviDataByTitle = (ObservableCollection<string>)geoviDataService.GetGeoviDataTitles();
+      }
+
+      private void SelectedCommandFunc(object parameter)
+      {
+         SelectedGeoviData = parameter != null ? parameter.ToString() : null;
+         if (SelectedGeoviData == null)
+            GeoviDatas = this.GeoviDataService.GetAllBy();
+         else
+            GeoviDatas = this.GeoviDataService.GetBy(SelectedGeoviData);
+
+      }
+
+      private void DeleteCommandFunc(object parameter)
+      {
+         if (parameter != null)
+         {
+            GeoviDataBy data = parameter as GeoviDataBy;
+            this.GeoviDatas.Remove(data);
+            this.GeoviDataByTitle.Remove(data.FilterName);
+         }
       }
    }
 }

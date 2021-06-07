@@ -20,6 +20,7 @@
     <None Remove="Images\outline_delete_black_36dp.png" />
     <None Remove="Images\outline_delete_forever_black_20.png" />
     <None Remove="Images\outline_delete_white_24.png" />
+    <None Remove="Images\outline_grade_black_36dp.png" />
     <None Remove="Images\outline_launch_black_36dp.png" />
     <None Remove="Images\outline_library_add_white_24dp.png" />
     <None Remove="Images\outline_new_label_white_36dp.png" />
@@ -41,6 +42,7 @@
     <EmbeddedResource Include="Images\outline_delete_black_36dp.png" />
     <EmbeddedResource Include="Images\outline_delete_forever_black_20.png" />
     <EmbeddedResource Include="Images\outline_delete_white_24.png" />
+    <EmbeddedResource Include="Images\outline_grade_black_36dp.png" />
     <EmbeddedResource Include="Images\outline_launch_black_36dp.png" />
     <EmbeddedResource Include="Images\outline_library_add_white_24dp.png" />
     <EmbeddedResource Include="Images\outline_new_label_white_36dp.png" />
@@ -65,6 +67,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\FavoritesPage.xaml.cs">
+      <DependentUpon>FavoritesPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="AppShell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -80,7 +88,13 @@
     <EmbeddedResource Update="Controls\TabItem.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\FavoritesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\GeoviMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SettingsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

@@ -20,7 +20,8 @@ namespace Geovi
          InitializeComponent();
          
          tabBar.Items.Add(new ShellContent { Route = PagesEnum.GeoviMainPage.ToString(), ContentTemplate = new DataTemplate(typeof(GeoviMainPage)) });
-         tabBar.Items.Add(new ShellContent { Route = PagesEnum.GeoviMainPage.ToString(), ContentTemplate = new DataTemplate(typeof(GeoviMainPage)) });
+         tabBar.Items.Add(new ShellContent { Route = PagesEnum.FavoritesPage.ToString(), ContentTemplate = new DataTemplate(typeof(FavoritesPage)) });
+         tabBar.Items.Add(new ShellContent { Route = PagesEnum.SettingsPage.ToString(), ContentTemplate = new DataTemplate(typeof(SettingsPage)) });
 
 
       }
