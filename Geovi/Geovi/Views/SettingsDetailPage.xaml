@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Geovi.Views.SettingsDetailPage"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             BackgroundColor="{DynamicResource SecondaryBackgroundColour}">
+    <ContentPage.Content>
+        <Grid RowDefinitions="100,130,*,*,*" RowSpacing="0">
+            <Grid ColumnDefinitions="52,*" ColumnSpacing="0">
+                <Path Data="{StaticResource BackArrowGeometry}"
+                      Fill="{DynamicResource PrimaryBackgroundBrush}" 
+                      Aspect="Uniform"
+                      VerticalOptions="Center" 
+                      HorizontalOptions="Center"
+                      HeightRequest="26" 
+                      WidthRequest="26" 
+                      Margin="24,20,0,0">
+                    <Path.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                    </Path.GestureRecognizers>
+                </Path>
+                <Label Text="{Binding Title}" 
+                       FontFamily="MontserratRegular" 
+                       FontSize="20" 
+                       TextColor="White" 
+                       Grid.Column="1" 
+                       Margin="24,20,0,0" 
+                       VerticalOptions="Center" />
+            </Grid>
+            <Grid Grid.Row="1" ColumnDefinitions="*,50,*" Margin="0,10" />
+            <BoxView Grid.Row="1" 
+                     Grid.RowSpan="4" 
+                     CornerRadius="0,0,0,0" 
+                     BackgroundColor="{DynamicResource PrimaryBackgroundColour}"/>
+            <StackLayout Grid.Row="1" Margin="20" HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="SETTINGS" FontSize="Large" FontFamily="MontserratRegular" TextColor="#FD7B38" />
+            </StackLayout>
+            <StackLayout Grid.Row="2" Margin="30">
+                <StackLayout Orientation="Vertical" Padding="0">
+                    <StackLayout Orientation="Horizontal">
+                        <BoxView HeightRequest="20" 
+                                 WidthRequest="20" 
+                                 BackgroundColor="Green" 
+                                 IsVisible="false"
+                                 HorizontalOptions="Start" />
+                        <Label Text="Selection Color" Style="{StaticResource EntryTitleStyle}" />
+                    </StackLayout>
+                    <Picker HorizontalOptions="FillAndExpand" 
+                           WidthRequest="50" 
+                           VerticalOptions="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                    <BoxView HeightRequest="20" 
+                                 WidthRequest="20" 
+                                 BackgroundColor="Green" 
+                                 IsVisible="false"
+                                 HorizontalOptions="Start" />
+                    <Label Text="Background" 
+                               Style="{StaticResource EntryTitleStyle}" />
+                </StackLayout>
+                <Picker HorizontalOptions="FillAndExpand" 
+                           WidthRequest="50" 
+                           VerticalOptions="Center" />
+            </StackLayout>
+            <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <BoxView HeightRequest="20" 
+                                 WidthRequest="20" 
+                                 BackgroundColor="Green" 
+                                 IsVisible="false"
+                                 HorizontalOptions="Start" />
+                        <Label Text="Background Color" 
+                               Style="{StaticResource EntryTitleStyle}" />
+                    </StackLayout>
+                    <Picker HorizontalOptions="FillAndExpand" 
+                           WidthRequest="50" 
+                           VerticalOptions="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                <!--<ff:CachedImage Source="{Binding Source={RelativeSource 
+                    AncestorType={x:Type controls:SettingsPage}},
+            Path=HeaderIconLaunch, Converter={StaticResource FFImageSourceConverter}}" 
+                        HorizontalOptions="Start" VerticalOptions="Center" 
+                                BackgroundColor="RosyBrown" 
+                                Aspect="AspectFit"  HeightRequest="25" WidthRequest="25"/>-->
+
+                    <Label Text="Zoom level" Style="{StaticResource EntryTitleStyle}" />
+                <Picker HorizontalOptions="FillAndExpand" 
+                       WidthRequest="50" 
+                       VerticalOptions="Center" />
+            </StackLayout>
+            
+            <!--<BoxView BackgroundColor="Red" HeightRequest="1" />-->
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

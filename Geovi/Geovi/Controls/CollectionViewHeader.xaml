@@ -53,8 +53,19 @@
         </StackLayout>
         <StackLayout Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End">
             <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type control:CollectionViewHeader}},
-            Path=HeaderIconLaunch, Converter={StaticResource FFImageSourceConverter}}" 
-                        HorizontalOptions="End" VerticalOptions="Center" Aspect="AspectFit"  HeightRequest="25" WidthRequest="25"/>
+                                        Path=HeaderIconLaunch, Converter={StaticResource FFImageSourceConverter}}" 
+                            HorizontalOptions="End" 
+                            VerticalOptions="Center" 
+                            Aspect="AspectFit"  
+                            HeightRequest="25" 
+                            WidthRequest="25">
+                <ff:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={RelativeSource 
+                                    AncestorType={x:Type viewModel:GeoviMainPageViewModel}}, 
+                                    Path=GeoviGoToDetailCommand}"
+                                                      CommandParameter="{Binding .}"/>
+                </ff:CachedImage.GestureRecognizers>
+            </ff:CachedImage>
 
             <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type control:CollectionViewHeader}},
             Path=HeaderIconAdd, Converter={StaticResource FFImageSourceConverter}}"

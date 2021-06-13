@@ -25,10 +25,14 @@ namespace Geovi.Net.IViewModels
       ICommand GeoviDataDeleteCommand { get;  set; }
 
       ICommand GeoviDataSelectedCommand { get;  set; }
+
+      ICommand GeoviGoToDetailCommand { get; set; }
       #endregion
 
       #region DataService
       IGeoviDataService GeoviDataService { get; set; }
+
+      INavigationService INavigationService { get; set; }
       #endregion
    }
 }

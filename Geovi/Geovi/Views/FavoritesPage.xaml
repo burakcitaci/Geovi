@@ -18,7 +18,7 @@
         </StackLayout>
         <BoxView Grid.Row="1" 
                  Grid.RowSpan="2"
-                 CornerRadius="20,20,0,0" 
+                 CornerRadius="0" 
                  Margin="0"
                  BackgroundColor="{DynamicResource PrimaryBackgroundColour}"/>
 

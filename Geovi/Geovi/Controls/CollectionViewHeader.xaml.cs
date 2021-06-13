@@ -70,7 +70,7 @@ namespace Geovi.Controls
          HeaderIconLaunch = "outline_launch_black_36dp.png";
          HeaderIconStar = "outline_grade_black_36dp.png";
          InitializeComponent();
-         
+         this.BindingContext = this.ViewModel;
          //this.headerLabel.Text = "TitleText";
       }
 

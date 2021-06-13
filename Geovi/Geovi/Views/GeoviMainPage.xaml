@@ -109,6 +109,12 @@
                                    FontSize="12" 
                                    FontFamily="RobotoItalic"
                                    Padding="10,0,0,10"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource 
+                                    AncestorType={x:Type viewModel:GeoviMainPageViewModel}}, 
+                                    Path=GeoviGoToDetailCommand}"
+                                                      CommandParameter="{Binding .}"/>
+                            </Grid.GestureRecognizers>
                         </Grid>
                     </SwipeView.Content>
                 </SwipeView>

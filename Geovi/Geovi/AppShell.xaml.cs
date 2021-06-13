@@ -23,6 +23,9 @@ namespace Geovi
          tabBar.Items.Add(new ShellContent { Route = PagesEnum.FavoritesPage.ToString(), ContentTemplate = new DataTemplate(typeof(FavoritesPage)) });
          tabBar.Items.Add(new ShellContent { Route = PagesEnum.SettingsPage.ToString(), ContentTemplate = new DataTemplate(typeof(SettingsPage)) });
 
+         Routing.RegisterRoute(PagesEnum.SettingsDetailPage.ToString(), typeof(SettingsDetailPage));
+         Routing.RegisterRoute(PagesEnum.GeoviDetailPage.ToString(), typeof(GeoviDetailPage));
+
 
       }
       protected override async void OnNavigated(ShellNavigatedEventArgs args)

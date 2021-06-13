@@ -8,6 +8,7 @@ using System.Text;
 using System.Linq;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
+using Geovi.Net.Enums;
 
 namespace Geovi.Net.ViewModels
 {
@@ -53,13 +54,15 @@ namespace Geovi.Net.ViewModels
       public ICommand GeoviDataSelectedCommand { get; set; }
       public ICommand GeoviDataDeleteCommand { get; set; }
       public IGeoviDataService GeoviDataService { get; set; }
-
+      public ICommand GeoviGoToDetailCommand { get; set; }
+      public INavigationService INavigationService { get; set; }
       public GeoviMainPageViewModel(INavigationService navigationService, IGeoviDataService geoviDataService)
       {
          GeoviDataService = geoviDataService;
+         this.INavigationService = navigationService;
          GeoviDatas = geoviDataService.GetAllBy();
          GeoviDataSelectedCommand = new RelayCommand(this.SelectedCommandFunc);
-
+         GeoviGoToDetailCommand = new RelayCommand(this.GoToDetailCommandFunc);
          GeoviDataDeleteCommand = new RelayCommand(this.DeleteCommandFunc);
          //GeoviDatas = geoviDataService.GetAllBy();
          GeoviDataByTitle = (ObservableCollection<string>)geoviDataService.GetGeoviDataTitles();
@@ -83,6 +86,11 @@ namespace Geovi.Net.ViewModels
             this.GeoviDatas.Remove(data);
             this.GeoviDataByTitle.Remove(data.FilterName);
          }
+      }
+
+      private void GoToDetailCommandFunc(object parameter)
+      {
+         this.INavigationService.Push(PagesEnum.GeoviDetailPage, parameter);
       }
    }
 }

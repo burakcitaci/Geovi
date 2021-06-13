@@ -24,8 +24,9 @@ namespace Geovi
          services.AddSingleton<IGeoviDataService, GeoviDataService>();
          //services.AddSingleton<ISettingsDataService, SettingsDataService>();
          services.AddTransient<IGeoviMainPageViewModel, GeoviMainPageViewModel>();
-         //services.AddTransient<ISettingsPageViewModel, SettingsViewModel>();
-         //services.AddTransient<IWfsDataDetailPageViewModel, WfsDataDetailPageViewModel>();
+         services.AddTransient<ISettingsPageViewModel, SettingsPageViewModel>();
+         services.AddTransient<ISettingsDetailPageViewModel, SettingsDetailPageViewModel>();
+         services.AddTransient<IGeoviDetailPageViewModel, GeoviDetailPageViewModel>();
 
          ServiceProvider = services.BuildServiceProvider();
          MainPage = new AppShell();

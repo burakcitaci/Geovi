@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Geovi.Net.IViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +19,17 @@ namespace Geovi.Views
       public SettingsPage()
       {
          HeaderIconLaunch = "outline_add_task_black_20.png";
+         BindingContext = ((App)App.Current).ServiceProvider.GetRequiredService<ISettingsPageViewModel>();
          InitializeComponent();
+         try
+         {
+           
+
+         }
+         catch (Exception ex)
+         {
+
+         }
       }
    }
 }

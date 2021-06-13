@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Geovi.Views.GeoviDetailPage"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             BackgroundColor="{DynamicResource SecondaryBackgroundColour}">
+    <ContentPage.Content>
+        <Grid RowDefinitions="100,60*,40*" RowSpacing="0">
+            <Grid ColumnDefinitions="52,*" ColumnSpacing="0">
+                <Path Data="{StaticResource BackArrowGeometry}"
+                      Fill="{DynamicResource PrimaryBackgroundBrush}" 
+                      Aspect="Uniform"
+                      VerticalOptions="Center" 
+                      HorizontalOptions="Center"
+                      HeightRequest="26" 
+                      WidthRequest="26" 
+                      Margin="24,20,0,0">
+                    <Path.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                    </Path.GestureRecognizers>
+                </Path>
+                <Label Text="{Binding Title}" 
+                       FontFamily="MontserratRegular" 
+                       FontSize="20" 
+                       TextColor="White" 
+                       Grid.Column="1" 
+                       Margin="24,20,0,0" 
+                       VerticalOptions="Center" />
+            </Grid>
+            <Grid Grid.Row="1">
+                
+            </Grid>
+            <Grid Grid.Row="2" BackgroundColor="White">
+                <Grid ColumnDefinitions="*,*" RowDefinitions="auto,auto" Margin="20">
+                    <StackLayout Grid.Column="0" Grid.Row="0" HorizontalOptions="Start"
+                                 VerticalOptions="Start" BackgroundColor="White">
+                        <Label Text="SERVICE TYPE" TextColor="Black" />
+                        <Label Text="{Binding GeoviData.ServiceType}" TextColor="Black" />
+                    </StackLayout>
+                    <StackLayout Grid.Column="1" Grid.Row="0" HorizontalOptions="Start"
+                                 VerticalOptions="Start" BackgroundColor="White">
+                        <Label Text="SERVICE URL" TextColor="Black" />
+                        <Label Text="{Binding GeoviData.ServiceUrl}" TextColor="Black" />
+                    </StackLayout>
+                    <StackLayout Grid.Column="0" Grid.Row="1" HorizontalOptions="Start"
+                                 VerticalOptions="Start" BackgroundColor="White">
+                        <Label Text="GEOMETRY TYPE" TextColor="Black" />
+                        <Label Text="{Binding GeoviData.ServiceType}" TextColor="Black" />
+                    </StackLayout>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

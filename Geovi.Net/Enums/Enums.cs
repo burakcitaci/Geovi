@@ -11,7 +11,7 @@ namespace Geovi.Net.Enums
 
    public enum PagesEnum
    {
-      GeoviMainPage,WfsDataPage, SettingsPage, FavoritesPage, CupPage, WfsDetailPage
+      GeoviMainPage, GeoviDetailPage, WfsDataPage, SettingsPage, SettingsDetailPage, FavoritesPage, CupPage, WfsDetailPage
    }
 
    public enum ServiceType
