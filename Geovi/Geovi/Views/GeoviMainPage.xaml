@@ -9,6 +9,7 @@
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:viewModel="clr-namespace:Geovi.Net.ViewModels;assembly=Geovi.Net"
              xmlns:views ="clr-namespace:Geovi.Views"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              x:Class="Geovi.Views.GeoviMainPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -60,16 +61,24 @@
                         </SwipeItems>
                     </SwipeView.LeftItems>
                     <SwipeView.Content>
-                        <Grid ColumnDefinitions="*,*" Margin="0" Padding="5">
+                        <pancake:PancakeView x:Name="pancakeView"
+                                             BackgroundColor="White" 
+                                             CornerRadius="10" 
+                                             Grid.ColumnSpan="2" 
+                                             Margin="4"
+                                             Grid.RowSpan="4">
+                            <Grid ColumnDefinitions="*,*" Margin="0" Padding="5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <BoxView BackgroundColor="#f5f6f9" 
+                            
+                            
+                            <!--<BoxView BackgroundColor="White" 
                                      CornerRadius="10" 
                                      Grid.ColumnSpan="2" 
-                                     Grid.RowSpan="4"/>
+                                     Grid.RowSpan="4"/>-->
                             <Label Grid.Row="0"
                                    Grid.Column="0"
                                    Text="{Binding LayerName}" 
@@ -116,6 +125,7 @@
                                                       CommandParameter="{Binding .}"/>
                             </Grid.GestureRecognizers>
                         </Grid>
+                        </pancake:PancakeView>
                     </SwipeView.Content>
                 </SwipeView>
             </DataTemplate>
@@ -126,6 +136,7 @@
         <BoxView Grid.Row="2" 
                  CornerRadius="20,20,0,0" 
                  Margin="0"
+                 
                  BackgroundColor="{DynamicResource PrimaryBackgroundColour}"/>
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding GeoviDataByTitle}"

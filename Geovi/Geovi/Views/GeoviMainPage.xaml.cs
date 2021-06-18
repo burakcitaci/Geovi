@@ -39,6 +39,7 @@ namespace Geovi.Views
       public GeoviMainPage()
       {
          InitializeComponent();
+         
          SizeChanged += MainPageSizeChanged;
          BindingContext = ((App)App.Current).ServiceProvider.GetRequiredService<IGeoviMainPageViewModel>();
 

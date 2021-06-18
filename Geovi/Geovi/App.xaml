@@ -47,7 +47,7 @@
 
         <Color x:Key="TextColour">#212837</Color>
         <Color x:Key="IconGrayColour">#7e90a1</Color>
-        <Color x:Key="PrimaryBackgroundColour">#ffffff</Color>
+        <Color x:Key="PrimaryBackgroundColour">#f5f5f5</Color>
         <Color x:Key="SecondaryBackgroundColour">#2e2545</Color>
         <Color x:Key="DetailColour">#FD7B38</Color>
         <Color x:Key="DeleteColour">#ff3333</Color>

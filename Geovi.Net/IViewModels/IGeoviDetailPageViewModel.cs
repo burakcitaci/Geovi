@@ -1,4 +1,5 @@
-﻿using Geovi.Net.Model;
+﻿using Esri.ArcGISRuntime.Data;
+using Geovi.Net.Model;
 using Geovi.Net.Services;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Geovi.Net.IViewModels
 {
    public interface IGeoviDetailPageViewModel
    {
+      //ServiceFeatureTable ServiceFeatureTable { get; set; }
       ICommand GoBackCommand { get; set; }
 
       INavigationService NavigationService { get; set; }

@@ -45,6 +45,19 @@
                                  BackgroundColor="Green" 
                                  IsVisible="false"
                                  HorizontalOptions="Start" />
+                        <Label Text="Basemap" Style="{StaticResource EntryTitleStyle}" />
+                    </StackLayout>
+                    <Picker HorizontalOptions="FillAndExpand" 
+                           WidthRequest="50" 
+                           VerticalOptions="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Vertical" Padding="0">
+                    <StackLayout Orientation="Horizontal">
+                        <BoxView HeightRequest="20" 
+                                 WidthRequest="20" 
+                                 BackgroundColor="Green" 
+                                 IsVisible="false"
+                                 HorizontalOptions="Start" />
                         <Label Text="Selection Color" Style="{StaticResource EntryTitleStyle}" />
                     </StackLayout>
                     <Picker HorizontalOptions="FillAndExpand" 
