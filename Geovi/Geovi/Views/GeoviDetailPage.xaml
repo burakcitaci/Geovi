@@ -7,68 +7,224 @@
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" 
              xmlns:mapping="clr-namespace:Esri.ArcGISRuntime.Mapping;assembly=Esri.ArcGISRuntime" 
              xmlns:esri1="http://schemas.esri.com/arcgis/runtime/2013"
+              xmlns:sh="http://sharpnado.com"
+             xmlns:views="clr-namespace:Geovi.Views"
+             xmlns:xanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:esriUI="clr-namespace:Esri.ArcGISRuntime.Xamarin.Forms;assembly=Esri.ArcGISRuntime.Xamarin.Forms"
              BackgroundColor="{DynamicResource SecondaryBackgroundColour}">
-    
+    <ContentPage.Resources>
+        <Style x:Key="BasemapStyle" TargetType="pancake:PancakeView">
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="HeightRequest" Value="50" />
+            <Setter Property="WidthRequest" Value="50" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <pancake:PancakeView  x:Name="pancakeView"  
-                              CornerRadius="50" >
-            <Grid RowDefinitions="10*,10*,60*" RowSpacing="0">
-                <Grid Grid.Row="1" Grid.RowSpan="2" Padding="15" BackgroundColor="WhiteSmoke">
-                    <esriUI:MapView x:Name="MyMapView" 
-                                Map="{Binding EsriMap}"
-                                GeoViewTapped="MyMapView_GeoViewTapped"
-                                NavigationCompleted="MyMapView_NavigationCompleted"/>
-                </Grid>
-                <Grid ColumnDefinitions="52,*" ColumnSpacing="0">
-                    <Path Data="{StaticResource BackArrowGeometry}"
-                          Fill="{DynamicResource PrimaryBackgroundBrush}" 
-                          Aspect="Uniform"
-                          VerticalOptions="Center" 
-                          HorizontalOptions="Center"
-                          HeightRequest="26" 
-                          WidthRequest="26" 
-                          Margin="24,20,0,0">
-                        <Path.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
-                        </Path.GestureRecognizers>
-                    </Path>
-                    <Label Text="{Binding Title}" 
+        <Grid RowDefinitions="120,100,*,*,20" ColumnDefinitions="70*,15*,15*" >
+
+            <!--<Label Text="{Binding Title}" 
                            FontFamily="MontserratRegular" 
                            FontSize="20" 
                            TextColor="White" 
                            Grid.Column="1" 
                            Margin="24,20,0,0" 
-                           VerticalOptions="Center" />
+                           VerticalOptions="Center" />-->
+            <esriUI:MapView x:Name="MyMapView" 
+                            Grid.Row="0"
+                            Grid.RowSpan="5"
+                            Grid.ColumnSpan="3"
+                            Map="{Binding EsriMap}"
+                            GeoViewTapped="MyMapView_GeoViewTapped"
+                            NavigationCompleted="MyMapView_NavigationCompleted"/>
+            <pancake:PancakeView Grid.Row="0" 
+                                 Grid.ColumnSpan="3"
+                                 BackgroundColor="White" 
+                                 VerticalOptions="EndAndExpand" 
+                                 Shadow="{StaticResource shad}" 
+                                 CornerRadius="10" Margin="20">
+                <StackLayout VerticalOptions="End"
+                             Orientation="Horizontal">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ChangeLayoutCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                    <StackLayout x:Name="labelStack"  
+                                 Orientation="Horizontal" 
+                                 IsVisible="{Binding IsVisibleChanged1}">
+                        <Path Data="{StaticResource BackArrowGeometry}"
+                              Fill="{DynamicResource GrayBackgroundBrush}" 
+                              Aspect="Uniform"
+                              Margin="15"
+                              HorizontalOptions="Start"
+                              HeightRequest="26" 
+                              WidthRequest="26">
+                            <Path.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                            </Path.GestureRecognizers>
+                        </Path>
+                        <Label Text="{Binding Title}" 
+                               FontFamily="MontserratRegular" 
+                               FontSize="20" 
+                               HorizontalOptions="StartAndExpand"
+                               Margin="15"
+                               TextColor="LightSlateGray"  />
+                    </StackLayout>
+                    <StackLayout IsVisible="{Binding IsVisibleChanged}" 
+                                 Orientation="Horizontal" 
+                                 HorizontalOptions="Fill">
+                        <Path Data="{StaticResource MagnifyingGlassGeometry}"
+                              Fill="{DynamicResource GrayBackgroundBrush}" 
+                              Aspect="Uniform"
+                              Margin="15"
+                              HorizontalOptions="Start"
+                              HeightRequest="26" 
+                              WidthRequest="26">
+                        </Path>
+                        <Entry FontSize="20" 
+                               VerticalOptions="Center" 
+                               Placeholder="Search for features" />
+                    </StackLayout>
+                </StackLayout>
+            </pancake:PancakeView>
+            
+            <pancake:PancakeView Grid.Row="1"
+                                 IsVisible="true"
+                                 Grid.Column="1"
+                                 Grid.ColumnSpan="2"
+                                 HorizontalOptions="End"
+                                 VerticalOptions="Center"
+                                 CornerRadius="10"
+                                 Padding="10"
+                                 
+                                 BackgroundColor="WhiteSmoke"
+                                 Margin="20,20">
+                <ff:CachedImage Source="{Binding Source={RelativeSource AncestorType={x:Type views:GeoviDetailPage}},
+                                        Path=LayerLaunchIconPath, Converter={StaticResource FFImageSourceConverter}}" 
+                            HorizontalOptions="Center" 
+                            VerticalOptions="Center"
+                            Aspect="Fill"  >
+                    <ff:CachedImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenSettingsCommand}"/>
+                    </ff:CachedImage.GestureRecognizers>
+                </ff:CachedImage>
+                <!--<pancake:PancakeView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenSettingsCommand}"/>
+                </pancake:PancakeView.GestureRecognizers>-->
+            </pancake:PancakeView>
+            <pancake:PancakeView x:Name="settingsWindow"
+                                 Grid.Row="1"
+                                 IsVisible="{Binding IsSettingsVisible}"
+                                 Grid.RowSpan="2"
+                                 Shadow="{StaticResource shad}"
+                                 Grid.Column="0"
+                                 CornerRadius="10"
+                                 Grid.ColumnSpan="3"
+                                 VerticalOptions="Start" 
+                                 HorizontalOptions="End"
+                                 
+                                 BackgroundColor="White"
+                                
+                                 Margin="20,20">
+                <Grid RowDefinitions="30,Auto,30,Auto">
+                    <Label Grid.Row="0" Text="Basemaps" 
+                           FontFamily="MontserratRegular" Margin="15,5" VerticalOptions="Start" />
+                    <StackLayout Orientation="Horizontal" Grid.Row="1"
+                                 HorizontalOptions="Center"
+                                 Margin="10" VerticalOptions="Start">
+                        <pancake:PancakeView BackgroundColor="LightSlateGray"
+                                             Shadow="{StaticResource shad2}"
+                                             Style="{StaticResource BasemapStyle}"/>
+                        <pancake:PancakeView BackgroundColor="Fuchsia" 
+                                             Shadow="{StaticResource shad2}"
+                                             Style="{StaticResource BasemapStyle}"/>
+                        <pancake:PancakeView BackgroundColor="Aquamarine" 
+                                             Shadow="{StaticResource shad2}"
+                                             Style="{StaticResource BasemapStyle}"/>
+                        <pancake:PancakeView BackgroundColor="DarkGoldenrod" 
+                                             Shadow="{StaticResource shad2}"
+                                             Style="{StaticResource BasemapStyle}"/>
+                    </StackLayout>
+                    <Label Grid.Row="2" Text="Layers" 
+                           FontFamily="MontserratRegular" Margin="15,5" 
+                           VerticalOptions="Start" />
+                    <StackLayout Orientation="Vertical" Grid.Row="3"
+                                 HorizontalOptions="Start"
+                                 Margin="10" VerticalOptions="Start">
+                        <pancake:PancakeView HorizontalOptions="Start">
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox HorizontalOptions="Start" />
+                                <Label Text="Layername" HorizontalOptions="Start" Margin="5" />
+                            </StackLayout>
+                        </pancake:PancakeView>
+                        <pancake:PancakeView HorizontalOptions="Start">
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox HorizontalOptions="Start" />
+                                <Label Text="Layername" HorizontalOptions="Start" Margin="5" />
+                            </StackLayout>
+                        </pancake:PancakeView>
+                        <pancake:PancakeView HorizontalOptions="Start">
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox HorizontalOptions="Start" />
+                                <Label Text="Layername" HorizontalOptions="Start" Margin="5" />
+                            </StackLayout>
+                        </pancake:PancakeView>
+                        <pancake:PancakeView HorizontalOptions="Start">
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox HorizontalOptions="Start" />
+                                <Label Text="Layername" HorizontalOptions="Start" Margin="5" />
+                            </StackLayout>
+                        </pancake:PancakeView>
+                        <pancake:PancakeView HorizontalOptions="Start">
+                            <StackLayout Orientation="Horizontal">
+                                <CheckBox HorizontalOptions="Start" />
+                                <Label Text="Layername" HorizontalOptions="Start" Margin="5" />
+                            </StackLayout>
+                        </pancake:PancakeView>
+                    </StackLayout>
                 </Grid>
+                <pancake:PancakeView.Behaviors>
+                    <xanimation:EntranceTransition Duration="700"/>
+                </pancake:PancakeView.Behaviors>
+                <pancake:PancakeView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenSettingsCommand}"/>
+                </pancake:PancakeView.GestureRecognizers>
+            </pancake:PancakeView>
+            <CollectionView 
+                            Grid.Row="3"
+                            VerticalScrollBarVisibility="Always"
+                            HorizontalScrollBarVisibility="Always"
+                            Grid.ColumnSpan="3"
+                            WidthRequest="250"
+                            Margin="10"
+                            VerticalOptions="Start"
+                            ItemsSource="{Binding Fields}"
+                            IsGrouped="False">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <pancake:PancakeView 
+                                 HorizontalOptions="FillAndExpand"
+                                 WidthRequest="250"
+                                 BackgroundColor="White" 
+                                 Shadow="{StaticResource shad}" 
+                                 Margin="15,50" CornerRadius="10" 
+                                 IsVisible="{Binding IsVisibleChanged}" >
+                            <Grid RowDefinitions="10*, 90*">
+                                <BoxView  Grid.Row="0" HeightRequest="1" HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="LightSlateGray" />
+                                <Label Text="gg" Grid.Row="0"  TextColor="White" HorizontalOptions="Center"/>
+                                <Label Grid.Row="1" FontFamily="MontserratRegular"  Text="{Binding .}" HorizontalOptions="Start" Margin="5"/>
+                            </Grid>
 
-                <Grid Grid.Row="1" BackgroundColor="WhiteSmoke" VerticalOptions="Center">
-
-                    <CollectionView IsVisible="true"
-                                    ItemsSource="{Binding Fields}"
-                                    IsGrouped="False" Margin="15" >
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <pancake:PancakeView
-                                                     BackgroundColor="White" 
-                                                     CornerRadius="5"
-                                                     HeightRequest="100"
-                                                     WidthRequest="100"
-                                                     Margin="24">
-                                    <Grid Padding="0" Margin="15">
-                                        <Label Text="{Binding .}" TextColor="Black"/>
-                                    </Grid>
-                                </pancake:PancakeView>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-
-                    </CollectionView>
-                </Grid>
-            </Grid>
-        </pancake:PancakeView>
+                        </pancake:PancakeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                
+            </CollectionView>
+            
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

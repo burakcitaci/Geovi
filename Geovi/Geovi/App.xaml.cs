@@ -17,7 +17,7 @@ namespace Geovi
       {
          InitializeComponent();
          Device.SetFlags(new string[] { "Shapes_Experimental", "Brush_Experimental" });
-
+         Sharpnado.Shades.Initializer.Initialize(true, true, filter: "ShadowsRenderer");
          var services = new ServiceCollection();
 
          services.AddSingleton<INavigationService, NavigationService>();

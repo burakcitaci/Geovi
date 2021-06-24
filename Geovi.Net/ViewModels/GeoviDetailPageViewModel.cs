@@ -12,6 +12,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Forms;
+using Xamarin.Forms.PancakeView;
 
 namespace Geovi.Net.ViewModels
 {
@@ -35,6 +37,10 @@ namespace Geovi.Net.ViewModels
          }
       }
       public ICommand GoBackCommand { get; set; }
+
+      public ICommand OpenSettingsCommand { get; set; }
+
+      public ICommand ChangeLayoutCommand { get; set; }
       public INavigationService NavigationService { get; set; }
       private string title = string.Empty;
       public string Title
@@ -47,6 +53,62 @@ namespace Geovi.Net.ViewModels
          {
             title = value;
             OnPropertyChanged(nameof(Title));
+         }
+      }
+
+      private string layoutTitle = string.Empty;
+      public string LayoutTitle
+      {
+         get
+         {
+            return this.layoutTitle;
+         }
+         set
+         {
+            this.layoutTitle = value;
+            OnPropertyChanged(LayoutTitle);
+         }
+      }
+
+      private bool isVisibleChanged;
+      public bool IsVisibleChanged
+      {
+         get
+         {
+            return isVisibleChanged;
+         }
+         set
+         {
+            isVisibleChanged = value;
+            this.IsVisibleChanged1 = !value;
+            OnPropertyChanged(nameof(IsVisibleChanged));
+         }
+      }
+
+      private bool isSettingsVisible = false;
+      public bool IsSettingsVisible
+      {
+         get
+         {
+            return this.isSettingsVisible;
+         }
+         set
+         {
+            isSettingsVisible = value;
+            OnPropertyChanged(nameof(IsSettingsVisible));
+         }
+      }
+      private bool isVisibleChanged1 = true;
+      public bool IsVisibleChanged1
+      {
+         get
+         {
+            return isVisibleChanged1;
+         }
+         set
+         {
+            isVisibleChanged1 = value;
+            OnPropertyChanged(nameof(IsVisibleChanged1));
          }
       }
       public GeoviData GeoviData { get; set; }
@@ -66,16 +128,31 @@ namespace Geovi.Net.ViewModels
          }
       }
 
+    
       public List<ServiceFeatureTable> ServiceFeatureTables { get; set; }
       public GeoviDetailPageViewModel(INavigationService navigationService)
       {
+         
          this.NavigationService = navigationService;
 
          GoBackCommand = new RelayCommand(this.GoBackCommandFunc);
+         ChangeLayoutCommand = new RelayCommand(this.ChangeLayoutCommandFunc);
+         OpenSettingsCommand = new RelayCommand(this.OpenSettingsCommandFunc);
          this.ServiceFeatureTables = new List<ServiceFeatureTable>();
          
       }
 
+      private void ChangeLayoutCommandFunc()
+      {
+         this.LayoutTitle = Guid.NewGuid().ToString().Substring(5);
+         this.IsVisibleChanged = !this.IsVisibleChanged;
+      }
+
+      private void OpenSettingsCommandFunc()
+      {
+        
+         this.IsSettingsVisible = !this.IsSettingsVisible;
+      }
       private void GoBackCommandFunc()
       {
          this.NavigationService.Pop();
@@ -116,6 +193,7 @@ namespace Geovi.Net.ViewModels
 
          await myFeatureTable.LoadAsync();
          FeatureLayer myFeatureLayer = new FeatureLayer(myFeatureTable);
+         myFeatureLayer.Renderer = GetRendererForTable(myFeatureTable);
          //Default oder custom renderer
          //myFeatureLayer.Renderer = this.GetRendererForTable(myFeatureTable);
          // Add the feature layer to the Map
@@ -133,6 +211,8 @@ namespace Geovi.Net.ViewModels
 
       private Renderer GetRendererForTable(FeatureTable table)
       {
+         Color color = this.ColorFromHSL();
+         Random rnd = new Random();
          switch (table.GeometryType)
          {
             case GeometryType.Point:
@@ -140,15 +220,31 @@ namespace Geovi.Net.ViewModels
                return new SimpleRenderer(new SimpleMarkerSymbol(SimpleMarkerSymbolStyle.Circle, System.Drawing.Color.Blue, 4));
 
             case GeometryType.Polygon:
+               
+               SimpleLineSymbol lineSymbol1 = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, color, rnd.Next(0, 5));
+               return new SimpleRenderer(new SimpleFillSymbol(SimpleFillSymbolStyle.Null, System.Drawing.Color.Transparent
+                  , lineSymbol1));
             case GeometryType.Envelope:
-               SimpleLineSymbol lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.Red, 1.0);
-               return new SimpleRenderer(new SimpleFillSymbol(SimpleFillSymbolStyle.Solid, System.Drawing.Color.Chartreuse, lineSymbol));
+               SimpleLineSymbol lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid,Color.Red, rnd.Next(0,5));
+               return new SimpleRenderer(new SimpleFillSymbol(SimpleFillSymbolStyle.Null, System.Drawing.Color.Transparent
+                  , lineSymbol));
 
             case GeometryType.Polyline:
-               return new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.YellowGreen, 12));
+               return new SimpleRenderer(new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, color, rnd.Next(0, 5)));
          }
 
          return null;
+      }
+
+      private Color ColorFromHSL()
+      {
+         Random rnd = new Random();
+         int r = 75;
+         int g = rnd.Next(0, 256);
+         int b = rnd.Next(10, 156);
+         int a = 1;
+
+         return Color.FromRgb( r, g, b);
       }
    }
 

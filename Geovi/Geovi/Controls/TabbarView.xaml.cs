@@ -57,9 +57,16 @@ namespace Geovi.Controls
 
       public async Task ShowTabBarAsync()
       {
-         if (!isTabBarShown)
-            await mainGrid.TranslateTo(0, 0);
-         isTabBarShown = true;
+         if(Shell.Current.CurrentPage.GetType() == typeof(Geovi.Views.GeoviDetailPage))
+         {
+            await this.HideTabBarAsync();
+         }
+         else
+         {
+            if (!isTabBarShown)
+               await mainGrid.TranslateTo(0, 0);
+            isTabBarShown = true;
+         }
       }
 
       public async Task HideTabBarAsync()

@@ -11,6 +11,7 @@
              xmlns:views ="clr-namespace:Geovi.Views"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              x:Class="Geovi.Views.GeoviMainPage">
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="BackgroundColor">#333EBD</Color>
@@ -63,6 +64,7 @@
                     <SwipeView.Content>
                         <pancake:PancakeView x:Name="pancakeView"
                                              BackgroundColor="White" 
+                                             Shadow="{StaticResource shad1}"
                                              CornerRadius="10" 
                                              Grid.ColumnSpan="2" 
                                              Margin="4"
@@ -196,6 +198,7 @@
                         ItemsSource="{Binding GeoviDatas}"
                         IsGrouped="True"
                         Margin="20,0,20,10">
+            
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
                     <control:CollectionViewHeader BindingContext="{Binding . }" TitleText="{Binding FilterName}" />

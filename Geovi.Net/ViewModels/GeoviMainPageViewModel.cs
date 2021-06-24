@@ -9,6 +9,8 @@ using System.Linq;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using Geovi.Net.Enums;
+using Xamarin.Forms.PancakeView;
+using Xamarin.Forms;
 
 namespace Geovi.Net.ViewModels
 {
@@ -50,6 +52,8 @@ namespace Geovi.Net.ViewModels
       }
       public string DeleteIcon { get => "outline_delete_white_24.png"; }
 
+     
+
       public string FavoriteIcon { get => "outline_star_rate_white_24.png"; }
       public ICommand GeoviDataSelectedCommand { get; set; }
       public ICommand GeoviDataDeleteCommand { get; set; }
@@ -58,6 +62,7 @@ namespace Geovi.Net.ViewModels
       public INavigationService INavigationService { get; set; }
       public GeoviMainPageViewModel(INavigationService navigationService, IGeoviDataService geoviDataService)
       {
+        
          GeoviDataService = geoviDataService;
          this.INavigationService = navigationService;
          GeoviDatas = geoviDataService.GetAllBy();

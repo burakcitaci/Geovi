@@ -6,6 +6,7 @@ using Esri.ArcGISRuntime.UI;
 using Geovi.Net.IViewModels;
 using Geovi.Net.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
+using Sharpnado.Shades;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,8 +30,10 @@ namespace Geovi.Views
          }
       }
 
+      public string LayerLaunchIconPath { get; set; }
       public GeoviDetailPage()
       {
+         LayerLaunchIconPath = "outline_layers_black_36dp.png";
          InitializeComponent();
          BindingContext = ((App)App.Current).ServiceProvider.GetRequiredService<IGeoviDetailPageViewModel>();
          this.ViewModel.MapLoaded += ViewModel_MapLoaded;
@@ -94,6 +97,16 @@ namespace Geovi.Views
          Point point = new Point(e.Location.X, e.Location.Y);
          this.MyMapView.ShowCalloutAt(e.Location, callout);
 
+      }
+
+      private void ClickGestureRecognizer_Clicked(object sender, EventArgs e)
+      {
+         //this.entryStack.IsVisible = !this.labelStack.IsVisible;
+      }
+
+      private void ClickGestureRecognizer_Clicked_1(object sender, EventArgs e)
+      {
+         this.settingsWindow.IsVisible = !this.settingsWindow.IsVisible;
       }
    }
 }

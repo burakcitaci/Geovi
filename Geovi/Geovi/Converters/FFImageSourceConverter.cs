@@ -1,6 +1,7 @@
 ﻿using FFImageLoading.Forms;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
@@ -16,7 +17,7 @@ namespace Geovi.Converters
           typeof(FFImageSourceConverter)
           .GetTypeInfo()
           .Assembly);
-
+         Debug.WriteLine(value.ToString());
          return emb;
       }
 
