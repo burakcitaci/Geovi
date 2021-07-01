@@ -17,7 +17,6 @@ namespace Geovi.Converters
           typeof(FFImageSourceConverter)
           .GetTypeInfo()
           .Assembly);
-         Debug.WriteLine(value.ToString());
          return emb;
       }
 

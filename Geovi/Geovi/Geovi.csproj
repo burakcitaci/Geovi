@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
   </PropertyGroup>
 
@@ -11,10 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\DarkGrayCanvas.png" />
+    <None Remove="Images\Imagery.png" />
     <None Remove="Images\index.png" />
+    <None Remove="Images\LightCanvas.png" />
     <None Remove="Images\logo_header.png" />
     <None Remove="Images\logo_large.png" />
     <None Remove="Images\logo_transparent.png" />
+    <None Remove="Images\OpenStreetMap.png" />
     <None Remove="Images\outline_add_task_black_20.png" />
     <None Remove="Images\outline_delete_black_20.png" />
     <None Remove="Images\outline_delete_black_36dp.png" />
@@ -34,10 +38,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Images\DarkGrayCanvas.png" />
+    <EmbeddedResource Include="Images\Imagery.png" />
     <EmbeddedResource Include="Images\index.png" />
+    <EmbeddedResource Include="Images\LightCanvas.png" />
     <EmbeddedResource Include="Images\logo_header.png" />
     <EmbeddedResource Include="Images\logo_large.png" />
     <EmbeddedResource Include="Images\logo_transparent.png" />
+    <EmbeddedResource Include="Images\OpenStreetMap.png" />
     <EmbeddedResource Include="Images\outline_add_task_black_20.png" />
     <EmbeddedResource Include="Images\outline_delete_black_20.png" />
     <EmbeddedResource Include="Images\outline_delete_black_36dp.png" />
@@ -85,6 +93,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\CollectionViewHeader.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\QuickSettingsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\TabbarView.xaml">

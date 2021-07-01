@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Collections.ObjectModel;
+using Microsoft.EntityFrameworkCore;
+using Geovi.Net.DBContext;
 
 namespace Geovi.Net.Services
 {
@@ -12,79 +14,19 @@ namespace Geovi.Net.Services
       ObservableCollection<GeoviDataBy> geoviDatasBy;
       public GeoviDataService()
       {
-         geoviDatasBy = new ObservableCollection<GeoviDataBy>
+        
+         using (var context = new CoreDbContext())
          {
-            new GeoviDataBy("Layer Name")
+            var datasFromDb = context.GeoviDatas.ToList();
+            if(datasFromDb == null || datasFromDb.Count == 0)
             {
-               
-               new GeoviData()
-               {
-                  Title = "Hello World",
-                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/arcgis/rest/services/Verwaltungsgrenzen_RLP/FeatureServer/0"),
-                  ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Map",
-                  Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. ",
-                  ParentName="Layer Name"
-               },
-                new GeoviData()
-               {
-                  Title = "Hello World",
-                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Verwaltungsgrenzen_RLP/FeatureServer/1"),
-                  ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Android",
-                  Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. ",
-                  ParentName="Layer Name"
-               },
-                 new GeoviData()
-               {
-                  Title = "Hello World",
-                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Verwaltungsgrenzen_RLP/FeatureServer/2"),
-                  ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Android",
-                  Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. ",
-                  ParentName="Layer Name"
-               }
-            },
-            new GeoviDataBy("Layer Title")
+               geoviDatasBy = Utils.Utils.GeoviDatas;
+            }
+            else
             {
-
-               new GeoviData()
-               {
-                  Title = "Hello World",
-                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Bev%c3%b6lkerung_nach_Alter/FeatureServer/0"),
-                  ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Map",
-                  ParentName="Layer Title"
-               },
-                new GeoviData()
-               {
-                  Title = "Hello World",
-                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Bev%c3%b6lkerung_nach_Alter/FeatureServer/1"),
-                  ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Android",
-                  ParentName="Layer Title"
-               }
-            },
-
-            new GeoviDataBy("Lorem Ipsum")
-            {
-
-               new GeoviData()
-               {
-                  Title = "Hello World",
-                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/EuroGlobalMap_Administrative_Boundaries/FeatureServer/0"),
-                  ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Map",
-                  ParentName="Lorem Ipsum"
-               },
-                new GeoviData()
-               {
-                  Title = "Hello World",
-                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/EuroGlobalMap_Administrative_Boundaries/FeatureServer/1"),
-                  ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Android",
-                  ParentName="Lorem Ipsum"
-               }
+               geoviDatasBy = new ObservableCollection<GeoviDataBy>(datasFromDb);
+               context.GeoviDatas.AddRange(geoviDatasBy);
+               context.SaveChanges();
             }
          };
       }

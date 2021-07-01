@@ -4,6 +4,7 @@ using Esri.ArcGISRuntime.Mapping;
 using Esri.ArcGISRuntime.Symbology;
 using Esri.ArcGISRuntime.UI;
 using Geovi.Net.IViewModels;
+using Geovi.Net.Utils;
 using Geovi.Net.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Sharpnado.Shades;
@@ -31,9 +32,12 @@ namespace Geovi.Views
       }
 
       public string LayerLaunchIconPath { get; set; }
+
+      //public string OpenStreetMapPath { get; set; }
       public GeoviDetailPage()
       {
          LayerLaunchIconPath = "outline_layers_black_36dp.png";
+         //OpenStreetMapPath = "OpenStreetMap.png";
          InitializeComponent();
          BindingContext = ((App)App.Current).ServiceProvider.GetRequiredService<IGeoviDetailPageViewModel>();
          this.ViewModel.MapLoaded += ViewModel_MapLoaded;
@@ -67,33 +71,42 @@ namespace Geovi.Views
          queryParameters.Geometry = e.Location;
          string sum = string.Empty;
          List<CalloutDefinition> calloutDefinitions = new List<CalloutDefinition>();
-         List<Feature> features = new List<Feature>();
+         //List<Feature> features = new List<Feature>();
          StringBuilder stringBuilder = new StringBuilder();
-         foreach(var table in this.ViewModel.ServiceFeatureTables)
+         this.ViewModel.Fields.Clear();
+         foreach (var table in this.ViewModel.ServiceFeatureTables)
          {
-            (table.Layer as FeatureLayer).ClearSelection();
-            stringBuilder.Append(table.TableName + Environment.NewLine);
-            string[] outputFields = { "*" };
-            FeatureQueryResult fqr = await table.QueryFeaturesAsync(queryParameters, QueryFeatureFields.LoadAll);
-            Feature feature = fqr.FirstOrDefault();
-            if(feature != null)
+            FeatureTable arcGISFeatureTable = table as FeatureTable;
+            FeatureLayer layer = table.Layer as FeatureLayer;
+            layer.ClearSelection();
+            if (this.ViewModel.EsriMap.OperationalLayers.Contains(layer))
             {
-               features.Add(feature);
-               (table.Layer as FeatureLayer).SelectFeature(feature);
-               StringBuilder sb = new StringBuilder();
-               foreach(var att in feature.Attributes)
+               
+               string[] outputFields = { "*" };
+               FeatureQueryResult fqr = await table.QueryFeaturesAsync(queryParameters, QueryFeatureFields.LoadAll);
+               Feature feature = fqr.FirstOrDefault();
+               if (feature != null)
                {
-                  if(att.Value.ToString().Length > 5)
+                  stringBuilder.Append(feature.Attributes.First().Value + Environment.NewLine);
+                  //features.Add(feature);
+                   layer.SelectFeature(feature);
+                  StringBuilder sb = new StringBuilder();
+                  FeatureTableWrapper wrapper = new FeatureTableWrapper();
+                  wrapper.TableName = layer.FeatureTable.TableName;
+                  wrapper.KeyValues = new Dictionary<string, string>();
+                  foreach (var att in feature.Attributes)
                   {
-                     sb.Append(att.Key + " : " + att.Value.ToString().Substring(0, 5) + Environment.NewLine);
-                  }        
+                     if (!wrapper.KeyValues.ContainsKey(att.Key))
+                     {
+                        wrapper.KeyValues.Add(att.Key, att.Value.ToString());
+                     }
+                  }
+                  this.ViewModel.Fields.Add(wrapper);
                }
-
-               this.ViewModel.Fields.Add(sb.ToString());
             }
          }
          this.MyMapView.GraphicsOverlays[0].Graphics.Add(new Esri.ArcGISRuntime.UI.Graphic(e.Location));
-         CalloutDefinition callout = new CalloutDefinition("hello", stringBuilder.ToString());
+         CalloutDefinition callout = new CalloutDefinition(this.ViewModel.GeoviDatas.FilterName, stringBuilder.ToString());
          Point point = new Point(e.Location.X, e.Location.Y);
          this.MyMapView.ShowCalloutAt(e.Location, callout);
 
@@ -106,7 +119,7 @@ namespace Geovi.Views
 
       private void ClickGestureRecognizer_Clicked_1(object sender, EventArgs e)
       {
-         this.settingsWindow.IsVisible = !this.settingsWindow.IsVisible;
+         //this.settingsWindow.IsVisible = !this.settingsWindow.IsVisible;
       }
    }
 }

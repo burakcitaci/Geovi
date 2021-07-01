@@ -75,6 +75,13 @@
             <Setter Property="VerticalOptions" Value="End"/>
             <Setter Property="TextColor" Value="White"/>
         </Style>
+        <Style x:Key="BasemapStyle" TargetType="pancake:PancakeView">
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="HeightRequest" Value="50" />
+            <Setter Property="WidthRequest" Value="50" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
         <Style x:Key="TitleStyleSetting" TargetType="Label">
             <Setter Property="FontFamily" Value="MontserratRegular"/>
             <Setter Property="FontAttributes" Value="Bold"/>

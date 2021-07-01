@@ -14,17 +14,17 @@ using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.PancakeView;
+using static Geovi.Net.Utils.Delegates;
 
 namespace Geovi.Net.ViewModels
 {
    public class GeoviDetailPageViewModel : BasePageViewModel, IGeoviDetailPageViewModel
    {
-      public delegate void MapLoadedEventHandler(object e, MapLoadedEventArgs args);
-
+      
       public event MapLoadedEventHandler MapLoaded;
 
-      private ObservableCollection<string> fields = new ObservableCollection<string>();
-      public ObservableCollection<string> Fields
+      private ObservableCollection<FeatureTableWrapper> fields = new ObservableCollection<FeatureTableWrapper>();
+      public ObservableCollection<FeatureTableWrapper> Fields
       {
          get
          {
@@ -41,6 +41,9 @@ namespace Geovi.Net.ViewModels
       public ICommand OpenSettingsCommand { get; set; }
 
       public ICommand ChangeLayoutCommand { get; set; }
+
+      public ICommand ChangeBasemapCommand { get; set; }
+      public ICommand LayerCheckCommand { get; set; }
       public INavigationService NavigationService { get; set; }
       private string title = string.Empty;
       public string Title
@@ -128,8 +131,54 @@ namespace Geovi.Net.ViewModels
          }
       }
 
-    
-      public List<ServiceFeatureTable> ServiceFeatureTables { get; set; }
+      public ObservableCollection<BasemapWrapper> Basemaps
+      {
+         get
+         {
+            return Utils.Utils.Basemaps;
+         }
+         set
+         {
+
+         }
+      }
+
+      private bool layerChecked = true;
+      public bool LayerChecked
+      {
+         get
+         {
+            return this.layerChecked;
+         }
+         set
+         {
+            layerChecked = value;
+            OnPropertyChanged(nameof(LayerChecked));
+         }
+      }
+      private ObservableCollection<ServiceFeatureTable> serviceFeatureTables;
+      public ObservableCollection<ServiceFeatureTable> ServiceFeatureTables
+      {
+         get => serviceFeatureTables;
+         set
+         {
+            serviceFeatureTables = value;
+            OnPropertyChanged(nameof(ServiceFeatureTable));
+         }
+      }
+
+      private ObservableCollection<QuickSettingsWrapper> quickSettings;
+      public ObservableCollection<QuickSettingsWrapper> QuickSettings
+      {
+         get => quickSettings;
+         set
+         {
+            quickSettings = value;
+            OnPropertyChanged(nameof(QuickSettingsWrapper));
+         }
+      }
+
+      //public List<ServiceFeatureTable> ServiceFeatureTables { get; set; }
       public GeoviDetailPageViewModel(INavigationService navigationService)
       {
          
@@ -138,7 +187,10 @@ namespace Geovi.Net.ViewModels
          GoBackCommand = new RelayCommand(this.GoBackCommandFunc);
          ChangeLayoutCommand = new RelayCommand(this.ChangeLayoutCommandFunc);
          OpenSettingsCommand = new RelayCommand(this.OpenSettingsCommandFunc);
-         this.ServiceFeatureTables = new List<ServiceFeatureTable>();
+         ChangeBasemapCommand = new RelayCommand(this.ChangeBasemapCommandFunc);
+         LayerCheckCommand = new RelayCommand(this.LayerCheckCommandFunc);
+         this.ServiceFeatureTables = new ObservableCollection<ServiceFeatureTable>();
+         this.QuickSettings = new ObservableCollection<QuickSettingsWrapper>();
          
       }
 
@@ -158,13 +210,30 @@ namespace Geovi.Net.ViewModels
          this.NavigationService.Pop();
       }
 
+      private async void ChangeBasemapCommandFunc(object parameter)
+      {
+         if(parameter != null)
+         {
+            Basemap basemap = (parameter as BasemapWrapper).Basemap;
+            this.EsriMap.Basemap = basemap;
+            await this.EsriMap.LoadAsync();
+         }
+      }
+
+      private async void LayerCheckCommandFunc(object parameter)
+      {
+         FeatureLayer featureLayer = this.EsriMap.OperationalLayers[0] as FeatureLayer;
+         //this.ServiceFeatureTables.Remove(featureLayer.FeatureTable as ServiceFeatureTable);
+         this.EsriMap.OperationalLayers.Remove(featureLayer);
+      }
+
       public override void OnPagePushing(params object[] parameters)
       {
          if (parameters != null && parameters.Length != 0)
          {
             this.GeoviDatas = parameters[0] as GeoviDataBy;
             this.Title = this.GeoviDatas.FilterName;
-            this.EsriMap = new Map(Basemap.CreateOpenStreetMap());
+            this.EsriMap = new Map(this.Basemaps.Last().Basemap);
             this.EsriMap.Loaded += EsriMap_Loaded;
             //this.EsriMap.LoadAsync();
             //GeoviData geoviDatas = parameters[0] as GeoviData;
@@ -187,11 +256,13 @@ namespace Geovi.Net.ViewModels
       private async void LoadServices(GeoviData geoviData)
       {
          Uri serviceUri = new Uri(geoviData.ServiceUrl.AbsoluteUri);
-
          // Initialize a new feature layer
          ServiceFeatureTable myFeatureTable = new ServiceFeatureTable(serviceUri);
-
          await myFeatureTable.LoadAsync();
+         QuickSettingsWrapper wrapper = new QuickSettingsWrapper();
+         wrapper.LayerChecked += Wrapper_LayerChecked;
+         wrapper.ServiceFeatureTable = myFeatureTable;
+         wrapper.IsLayerChecked = true;
          FeatureLayer myFeatureLayer = new FeatureLayer(myFeatureTable);
          myFeatureLayer.Renderer = GetRendererForTable(myFeatureTable);
          //Default oder custom renderer
@@ -202,11 +273,35 @@ namespace Geovi.Net.ViewModels
          this.EsriMap.OperationalLayers.Add(myFeatureLayer);
          this.EsriMap.InitialViewpoint = new Viewpoint(myFeatureTable.Extent.GetCenter(), 3000);
          this.ServiceFeatureTables.Add(myFeatureTable);
+         this.QuickSettings.Add(wrapper);
         
          if (MapLoaded != null && this.ServiceFeatureTables.Count == 1)
          {
             MapLoaded(this.ServiceFeatureTables.First().Extent, null);
          }
+      }
+
+      private void Wrapper_LayerChecked(object e, LayerCheckedEventArgs args)
+      {
+         try
+         {
+            if (!args.Checked)
+            {
+               int index = this.EsriMap.OperationalLayers.IndexOf(e as FeatureLayer);
+               
+               this.EsriMap.OperationalLayers.RemoveAt(index);
+            }
+            else
+            {
+               var layer = ((FeatureLayer)e);
+               this.EsriMap.OperationalLayers.Add(layer);
+            }
+         }
+         catch(Exception ex)
+         {
+
+         }
+         //this.ServiceFeatureTables.Remove(table);
       }
 
       private Renderer GetRendererForTable(FeatureTable table)
@@ -248,9 +343,7 @@ namespace Geovi.Net.ViewModels
       }
    }
 
-   public class MapLoadedEventArgs
-   {
-      public MapLoadedEventArgs(string text) { Text = text; }
-      public string Text { get; } // readonly
-   }
+  
+
+ 
 }
