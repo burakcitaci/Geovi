@@ -16,16 +16,15 @@ namespace Geovi.Net.ViewModels
 {
    public class GeoviMainPageViewModel : BasePageViewModel, IGeoviMainPageViewModel
    {
-      public string Title { get => "HelloWorld"; }
-
-      private ObservableCollection<GeoviDataBy> geoviDatas;
-      public ObservableCollection<GeoviDataBy> GeoviDatas 
+      #region Observables
+      private ObservableCollection<GeoviProject> geoviProjects;
+      public ObservableCollection<GeoviProject> GeoviProjects
       {
-         get => geoviDatas;
+         get => geoviProjects;
          set
          {
-            geoviDatas = value;
-            OnPropertyChanged(nameof(GeoviDatas));
+            geoviProjects = value;
+            OnPropertyChanged(nameof(GeoviProjects));
          }
       }
 
@@ -39,7 +38,10 @@ namespace Geovi.Net.ViewModels
             OnPropertyChanged(nameof(GeoviDataByTitle));
          }
       }
+      #endregion
 
+      #region Strings
+      public string Title { get => "HelloWorld"; }
       private string selectedGeoviData;
       public string SelectedGeoviData
       {
@@ -50,22 +52,38 @@ namespace Geovi.Net.ViewModels
             OnPropertyChanged(nameof(SelectedGeoviData));
          }
       }
-      public string DeleteIcon { get => "outline_delete_white_24.png"; }
-
-     
-
-      public string FavoriteIcon { get => "outline_star_rate_white_24.png"; }
+    
+      #endregion
+ 
+      #region Commands
+      /// <summary>
+      /// 
+      /// </summary>
       public ICommand GeoviDataSelectedCommand { get; set; }
+
+      /// <summary>
+      /// 
+      /// </summary>
       public ICommand GeoviDataDeleteCommand { get; set; }
-      public IGeoviDataService GeoviDataService { get; set; }
+
+      /// <summary>
+      /// 
+      /// </summary>
       public ICommand GeoviGoToDetailCommand { get; set; }
+
+      #endregion
+     
+      #region Services
+      public IGeoviDataService GeoviDataService { get; set; }
       public INavigationService INavigationService { get; set; }
+      #endregion
+
       public GeoviMainPageViewModel(INavigationService navigationService, IGeoviDataService geoviDataService)
       {
         
          GeoviDataService = geoviDataService;
          this.INavigationService = navigationService;
-         GeoviDatas = geoviDataService.GetAllBy();
+         this.GeoviProjects = geoviDataService.GetAllBy();
          GeoviDataSelectedCommand = new RelayCommand(this.SelectedCommandFunc);
          GeoviGoToDetailCommand = new RelayCommand(this.GoToDetailCommandFunc);
          GeoviDataDeleteCommand = new RelayCommand(this.DeleteCommandFunc);
@@ -73,26 +91,37 @@ namespace Geovi.Net.ViewModels
          GeoviDataByTitle = (ObservableCollection<string>)geoviDataService.GetGeoviDataTitles();
       }
 
+      /// <summary>
+      /// Filters Geovi project selectedi in TabView
+      /// </summary>
+      /// <param name="parameter"></param>
       private void SelectedCommandFunc(object parameter)
       {
          SelectedGeoviData = parameter != null ? parameter.ToString() : null;
          if (SelectedGeoviData == null)
-            GeoviDatas = this.GeoviDataService.GetAllBy();
+            GeoviProjects = this.GeoviDataService.GetAllBy();
          else
-            GeoviDatas = this.GeoviDataService.GetBy(SelectedGeoviData);
-
+            GeoviProjects = this.GeoviDataService.GetBy(SelectedGeoviData);
       }
 
+      /// <summary>
+      /// Deletes Geovi project
+      /// </summary>
+      /// <param name="parameter"></param>
       private void DeleteCommandFunc(object parameter)
       {
          if (parameter != null)
          {
-            GeoviDataBy data = parameter as GeoviDataBy;
-            this.GeoviDatas.Remove(data);
-            this.GeoviDataByTitle.Remove(data.FilterName);
+            GeoviProject project = parameter as GeoviProject;
+            this.GeoviProjects.Remove(project);
+            this.GeoviDataByTitle.Remove(project.Name);
          }
       }
 
+      /// <summary>
+      /// Navigates to details page of GeoviProject
+      /// </summary>
+      /// <param name="parameter"></param>
       private void GoToDetailCommandFunc(object parameter)
       {
          this.INavigationService.Push(PagesEnum.GeoviDetailPage, parameter);

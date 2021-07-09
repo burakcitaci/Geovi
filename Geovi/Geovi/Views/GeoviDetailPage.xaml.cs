@@ -106,7 +106,7 @@ namespace Geovi.Views
             }
          }
          this.MyMapView.GraphicsOverlays[0].Graphics.Add(new Esri.ArcGISRuntime.UI.Graphic(e.Location));
-         CalloutDefinition callout = new CalloutDefinition(this.ViewModel.GeoviDatas.FilterName, stringBuilder.ToString());
+         CalloutDefinition callout = new CalloutDefinition(this.ViewModel.GeoviProject.Name, stringBuilder.ToString());
          Point point = new Point(e.Location.X, e.Location.Y);
          this.MyMapView.ShowCalloutAt(e.Location, callout);
 

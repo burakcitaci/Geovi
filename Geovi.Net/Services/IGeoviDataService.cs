@@ -8,12 +8,12 @@ namespace Geovi.Net.Services
 {
    public interface IGeoviDataService
    {
-      ObservableCollection<GeoviData> GetAll();
+      ObservableCollection<GeoviService> GetAll();
 
-      ObservableCollection<GeoviDataBy> GetBy(string parameter);
+      ObservableCollection<GeoviProject> GetBy(string parameter);
 
       ObservableCollection<string> GetGeoviDataTitles();
 
-      ObservableCollection<GeoviDataBy> GetAllBy();
+      ObservableCollection<GeoviProject> GetAllBy();
    }
 }

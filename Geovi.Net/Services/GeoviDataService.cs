@@ -6,50 +6,73 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
 using Geovi.Net.DBContext;
+using System.Diagnostics;
 
 namespace Geovi.Net.Services
 {
    public class GeoviDataService : IGeoviDataService
    {
-      ObservableCollection<GeoviDataBy> geoviDatasBy;
+      ObservableCollection<GeoviProject> geoviProjects;
       public GeoviDataService()
       {
-        
-         using (var context = new CoreDbContext())
+         try
          {
-            var datasFromDb = context.GeoviDatas.ToList();
-            if(datasFromDb == null || datasFromDb.Count == 0)
+            using (var context = new CoreDbContext())
             {
-               geoviDatasBy = Utils.Utils.GeoviDatas;
-            }
-            else
-            {
-               geoviDatasBy = new ObservableCollection<GeoviDataBy>(datasFromDb);
-               context.GeoviDatas.AddRange(geoviDatasBy);
-               context.SaveChanges();
-            }
-         };
+               //context.Database.EnsureCreated();
+               var con = context.GeoviProjects.Include(x=>x.GeoviServices).ToList();
+               //foreach(var c in con)
+               //{
+               //   //Debug.WriteLine(c.FilterName + " " + c.Liste.Count());
+               //}
+              
+               //context.SaveChanges();
+               //var datasFromDb = context.GeoviDatas.ToList();
+               //var dd  = context.Geovis.ToList();
+               //if (datasFromDb == null || datasFromDb.Count == 0)
+               //{
+
+               //   geoviDatasBy = Utils.Utils.GeoviDatas;
+               //   context.GeoviDatas.AddRange(geoviDatasBy);
+               //   context.SaveChanges();
+               //   var tt = context.GeoviDatas.ToList();
+               //}
+               //else
+               {
+                  geoviProjects = new ObservableCollection<GeoviProject>(context.GeoviProjects.ToList());
+                  //context.GeoviDatas.AddRange(new GeoviDataBy("Oki", Utils.Utils.Datas));
+                  //context.SaveChanges();
+
+                  
+               }
+            };
+         }
+         catch(Exception ex)
+         {
+
+         }
+       
       }
-      public ObservableCollection<GeoviData> GetAll()
+      public ObservableCollection<GeoviService> GetAll()
       {
-         return ((ObservableCollection<GeoviData>)(from geovi in geoviDatasBy
+         return ((ObservableCollection<GeoviService>)(from geovi in geoviProjects
                  from data in geovi
                  select data));
       }
 
-      public ObservableCollection<GeoviDataBy> GetBy(string parameter)
+      public ObservableCollection<GeoviProject> GetBy(string parameter)
       {
-         return new ObservableCollection<GeoviDataBy>(geoviDatasBy.Where(x => x.FilterBy == parameter));
+         return new ObservableCollection<GeoviProject>(geoviProjects.Where(x => x.Name == parameter));
       }
 
-      public ObservableCollection<GeoviDataBy> GetAllBy()
+      public ObservableCollection<GeoviProject> GetAllBy()
       {
-         return geoviDatasBy;
+         return geoviProjects;
       }
 
       public ObservableCollection<string> GetGeoviDataTitles()
       {
-         var t = geoviDatasBy.Select(x => x.FilterName);
+         var t = geoviProjects.Select(x => x.Name);
          var observable = new ObservableCollection<string>(t);
          return observable;
       }

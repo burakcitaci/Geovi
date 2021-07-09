@@ -15,9 +15,9 @@ namespace Geovi.Net.IViewModels
 
       INavigationService NavigationService { get; set; }
 
-      GeoviData GeoviData { get; set; }
+      GeoviService GeoviService { get; set; }
 
-      GeoviDataBy GeoviDatas { get; set; }
+      GeoviProject GeoviProject { get; set; }
       string Title { get; set; }
       //ICommand GoBackCommand { get; }
       //Match Match { get; set; }

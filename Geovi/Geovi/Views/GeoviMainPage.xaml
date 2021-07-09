@@ -11,7 +11,6 @@
              xmlns:views ="clr-namespace:Geovi.Views"
              xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              x:Class="Geovi.Views.GeoviMainPage">
-
     <ContentPage.Resources>
         <ResourceDictionary>
             <Color x:Key="BackgroundColor">#333EBD</Color>
@@ -133,12 +132,13 @@
             </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Grid RowDefinitions="100,40,*" BackgroundColor="Transparent"  RowSpacing="0">
+    <Grid RowDefinitions="100,40,*" 
+          BackgroundColor="Transparent"  
+          RowSpacing="0">
         <control:AppBar VerticalOptions="Start" />
         <BoxView Grid.Row="2" 
                  CornerRadius="20,20,0,0" 
                  Margin="0"
-                 
                  BackgroundColor="{DynamicResource PrimaryBackgroundColour}"/>
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding GeoviDataByTitle}"
@@ -146,10 +146,12 @@
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Horizontal"/>
             </CollectionView.ItemsLayout>
-
             <CollectionView.Header>
-                <StackLayout Spacing="0" Orientation="Horizontal">
-                    <BoxView HorizontalOptions="Start" WidthRequest="30" BackgroundColor="Transparent"/>
+                <StackLayout Spacing="0" 
+                             Orientation="Horizontal">
+                    <BoxView HorizontalOptions="Start" 
+                             WidthRequest="30" 
+                             BackgroundColor="Transparent"/>
                     <control:TabItem x:Name="tabItem1" 
                                    Text="HOME" BindingContext="{x:Null}"
                                    IsSelected="{Binding Source={RelativeSource AncestorType={x:Type viewModel:GeoviMainPageViewModel}}, 
@@ -164,7 +166,6 @@
                     </control:TabItem>
                 </StackLayout>
             </CollectionView.Header>
-
             <CollectionView.Footer>
                 <BoxView HorizontalOptions="Start" 
                          WidthRequest="30" 
@@ -173,12 +174,14 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <ContentView>
-                        <control:TabItem x:Name="tabItem" Text="{Binding .}" Margin="5,0,0,0"
-                                       IsSelected="{Binding Source={RelativeSource 
-                            AncestorType={x:Type  viewModel:GeoviMainPageViewModel}}, 
-                            Path=SelectedGeoviData, 
-                            Converter={StaticResource SelectionConverter}, 
-                            ConverterParameter={x:Reference tabItem}}">
+                        <control:TabItem x:Name="tabItem" 
+                                         Text="{Binding .}"
+                                         Margin="5,0,0,0"
+                                         IsSelected="{Binding Source={RelativeSource 
+                                                    AncestorType={x:Type  viewModel:GeoviMainPageViewModel}}, 
+                                                    Path=SelectedGeoviData, 
+                                                    Converter={StaticResource SelectionConverter}, 
+                                                    ConverterParameter={x:Reference tabItem}}">
                             <control:TabItem.GestureRecognizers>
                                 <TapGestureRecognizer Command=
                                                       "{Binding Source={RelativeSource 
@@ -191,17 +194,16 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
         <CollectionView x:Name="ItemsListView" 
                         Grid.Row="2"
                         ItemTemplate="{StaticResource MessageTemplate}"
                         ItemsSource="{Binding GeoviDatas}"
                         IsGrouped="True"
                         Margin="20,0,20,10">
-            
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
-                    <control:CollectionViewHeader BindingContext="{Binding . }" TitleText="{Binding FilterName}" />
+                    <control:CollectionViewHeader BindingContext="{Binding . }" 
+                                                  TitleText="{Binding FilterName}" />
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
             <CollectionView.Header>
@@ -211,8 +213,9 @@
                 <BoxView VerticalOptions="Start" HeightRequest="90"/>
             </CollectionView.Footer>
         </CollectionView>
-        <BoxView Grid.Row="2" BackgroundColor="{DynamicResource SecondaryBackgroundColour}" VerticalOptions="Start" HeightRequest="36"
+        <BoxView Grid.Row="2" BackgroundColor="{DynamicResource SecondaryBackgroundColour}" 
+                 VerticalOptions="Start" 
+                 HeightRequest="36"
                  Clip="{Binding CollectionViewClip, Source={RelativeSource AncestorType={x:Type views:GeoviMainPage}}}"/>
-
     </Grid>
 </ContentPage>

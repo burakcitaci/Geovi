@@ -76,12 +76,12 @@ namespace Geovi.Controls
 
       private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
       {
-         GeoviDataBy geoviDatas = this.BindingContext as GeoviDataBy;
+         GeoviProject geoviDatas = this.BindingContext as GeoviProject;
 
          //int index = ViewModel.GeoviDatas.ToList().FindIndex(x=>x.FilterName == geoviDatas.FilterName);
          //this.ViewModel.GeoviDatas.RemoveAt(index);
-         this.ViewModel.GeoviDatas.Remove(geoviDatas);
-         this.ViewModel.GeoviDataByTitle.Remove(geoviDatas.FilterName);
+         this.ViewModel.GeoviProjects.Remove(geoviDatas);
+         this.ViewModel.GeoviDataByTitle.Remove(geoviDatas.Name);
       }
    }
 }

@@ -11,11 +11,26 @@ using System.Linq;
 using Esri.ArcGISRuntime.Data;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using Geovi.Net.DBContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace Geovi.Net.ViewModels
 {
    public class SettingsDetailPageViewModel : BasePageViewModel, ISettingsDetailPageViewModel
    {
+      private Settings settings;
+      public Settings Settings
+      {
+         get
+         {
+            return this.settings;
+         }
+         set
+         {
+            this.settings = value;
+            OnPropertyChanged(nameof(Settings));
+         }
+      }
       private string title = string.Empty;
       public string Title
       {
@@ -30,17 +45,17 @@ namespace Geovi.Net.ViewModels
          }
       }
 
-      private GeoviDataBy geoviDatas; 
-      private GeoviDataBy GeoviDatas
+      private GeoviProject geoviProject; 
+      private GeoviProject GeoviProject
       {
          get
          {
-            return geoviDatas;
+            return geoviProject;
          }
          set
          {
-            geoviDatas = value;
-            OnPropertyChanged(nameof(GeoviDatas));
+            geoviProject = value;
+            OnPropertyChanged(nameof(GeoviProject));
          }
       }
 
@@ -56,6 +71,21 @@ namespace Geovi.Net.ViewModels
          {
             fields = value;
             OnPropertyChanged(nameof(Fields));
+         }
+      }
+
+      private string selectedFieldName;
+      public string SelectedFieldName
+      {
+         get
+         {
+            return this.selectedFieldName;
+         }
+         set
+         {
+            this.selectedFieldName = value;
+            this.Settings.FieldName = value;
+            OnPropertyChanged(nameof(SelectedFieldName));
          }
       }
 
@@ -85,8 +115,10 @@ namespace Geovi.Net.ViewModels
          }
          set
          {
+            
             selectedColorName = value;
             PickedColor = Utils.Utils.NameToColor[value];
+            this.Settings.SelectedColorName = value;
             OnPropertyChanged(nameof(SelectedColorName));
          }
       }
@@ -105,13 +137,26 @@ namespace Geovi.Net.ViewModels
             OnPropertyChanged(nameof(PickedColor));
          }
       }
-      private GeoviData GeoviData
+      private GeoviService GeoviService
       {
          get
          {
-            return this.GeoviDatas.Where(x => x.ParentName == this.Title).FirstOrDefault();
+            return this.GeoviProject.Where(x => x.ParentName == this.Title).FirstOrDefault();
          }
       }
+
+      public Settings DefaultSettings
+      {
+         get
+         {
+            Settings settings = new Settings();
+            settings.BasemapName = "Light";
+            settings.FieldName = string.Empty;
+            settings.SelectedColorName = "Red";
+            return settings;
+         }
+      }
+
 
       public ObservableCollection<BasemapWrapper> Basemaps
       {
@@ -122,6 +167,21 @@ namespace Geovi.Net.ViewModels
          set
          {
 
+         }
+      }
+
+      private BasemapWrapper selectedBasemap;
+      public BasemapWrapper SelectedBasemap
+      {
+         get
+         {
+            return this.selectedBasemap;
+         }
+         set
+         {
+            this.selectedBasemap = value;
+            this.Settings.BasemapName = selectedBasemap.Basemap.Name;
+            OnPropertyChanged(nameof(SelectedBasemap));
          }
       }
 
@@ -138,6 +198,11 @@ namespace Geovi.Net.ViewModels
          get;set;
       }
 
+      public ICommand SaveChangesCommand
+      {
+         get; set;
+      }
+
       private INavigationService NavigationService;
 
       public SettingsDetailPageViewModel(INavigationService navigationService)
@@ -145,6 +210,8 @@ namespace Geovi.Net.ViewModels
          this.NavigationService = navigationService;
 
          GoBackCommand = new RelayCommand(this.GoBackCommandFunc);
+
+         SaveChangesCommand = new RelayCommand(this.SaveChangesCommandFunc);
       }
 
 
@@ -153,21 +220,57 @@ namespace Geovi.Net.ViewModels
          this.NavigationService.Pop();
       }
 
+      private void SaveChangesCommandFunc()
+      {
+         using (var dbContext = new CoreDbContext())
+         {
+            var list = dbContext.GeoviProjects.ToList();
+            GeoviProject geoviData = dbContext.GeoviProjects
+               .Include(x=>x.Settings)
+               .Where(x => x.GeoviProjectID == this.GeoviProject.GeoviProjectID)
+               .FirstOrDefault();
+            foreach(var dt in dbContext.GeoviProjects)
+            {
+               if (dt.GeoviProjectID == this.GeoviProject.GeoviProjectID)
+               {
+                  geoviData = this.GeoviProject;
+                  geoviData.Settings = this.Settings;
+                  dbContext.SaveChanges();
+
+               }
+            }
+            
+         }
+      }
       public override void OnPagePushing(params object[] parameters)
       {
-         if (parameters != null && parameters.Length != 0)
+         try
          {
-            GeoviDataBy geoviDatas = parameters[0] as GeoviDataBy;
-            this.GeoviDatas = geoviDatas;
-            this.Title = geoviDatas.FilterName;
-            GetFields();
+            if (parameters != null && parameters.Length != 0)
+            {
+               GeoviProject geoviDatas = parameters[0] as GeoviProject;
+               this.GeoviProject = geoviDatas;
+               this.Title = geoviDatas.Name;
+               this.Settings = this.GeoviProject.Settings;
+               if (this.Settings == null)
+               {
+                  this.Settings = this.DefaultSettings;
+               }
+               this.SelectedColorName = this.Settings.SelectedColorName;
+               GetFields();
+            }
          }
+         catch(Exception ex)
+         {
+
+         }
+        
       }
 
       private async  void GetFields()
       {
 
-         Uri serviceUri = new Uri(GeoviData.ServiceUrl.AbsoluteUri);
+         Uri serviceUri = new Uri(GeoviService.ServiceUrl.AbsoluteUri);
          // Initialize a new feature layer
          ServiceFeatureTable myFeatureTable = new ServiceFeatureTable(serviceUri);
          await myFeatureTable.LoadAsync();

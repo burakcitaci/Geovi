@@ -33,7 +33,7 @@ namespace Geovi.Views
          }
       }
 
-      public ObservableCollection<GeoviDataBy> GeoviDatas;
+      public ObservableCollection<GeoviProject> GeoviProjects;
       public ObservableCollection<string> GeoviDatasByTitle;
       public GeoviData GeoviData;
       public GeoviMainPage()
@@ -43,8 +43,8 @@ namespace Geovi.Views
          SizeChanged += MainPageSizeChanged;
          BindingContext = ((App)App.Current).ServiceProvider.GetRequiredService<IGeoviMainPageViewModel>();
 
-        
-         GeoviDatas = this.ViewModel.GeoviDatas;
+
+         GeoviProjects = this.ViewModel.GeoviProjects;
          GeoviDatasByTitle = this.ViewModel.GeoviDataByTitle;
 
       }
@@ -74,14 +74,14 @@ namespace Geovi.Views
       }
       private void addToFavorite_Invoked(object sender, EventArgs e)
       {
-         this.GeoviData = (((SwipeItem)sender).BindingContext as GeoviData);
-         int index = this.GeoviDatas.ToList().FindIndex(x => x.FilterName == this.GeoviData.ParentName);
-         this.GeoviDatas[index].Remove(this.GeoviData);
-         if(this.GeoviDatas[index].Count() == 0)
-         {
-            this.GeoviDatas.RemoveAt(index);
-            this.GeoviDatasByTitle.Remove(this.GeoviData.ParentName);
-         }
+         //this.GeoviData = (((SwipeItem)sender).BindingContext as GeoviData);
+         //int index = this.GeoviDatas.ToList().FindIndex(x => x.FilterName == this.GeoviData.ParentName);
+         //this.GeoviDatas[index].Remove(this.GeoviData);
+         //if(this.GeoviDatas[index].Count() == 0)
+         //{
+         //   this.GeoviDatas.RemoveAt(index);
+         //   this.GeoviDatasByTitle.Remove(this.GeoviData.ParentName);
+         //}
       }
 
       private void deleteLayer_Invoked(object sender, EventArgs e)
@@ -91,7 +91,7 @@ namespace Geovi.Views
 
       private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
       {
-         this.ViewModel.GeoviDatas = new ObservableCollection<GeoviDataBy>();
+         this.ViewModel.GeoviProjects = new ObservableCollection<GeoviProject>();
          this.ViewModel.GeoviDataByTitle = new ObservableCollection<string>();
       }
    }

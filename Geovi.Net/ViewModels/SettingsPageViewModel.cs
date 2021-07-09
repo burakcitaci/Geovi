@@ -13,14 +13,14 @@ namespace Geovi.Net.ViewModels
 {
    public class SettingsPageViewModel : BasePageViewModel, ISettingsPageViewModel
    {
-      private ObservableCollection<GeoviDataBy> geoviDatas;
-      public ObservableCollection<GeoviDataBy> GeoviDatas
+      private ObservableCollection<GeoviProject> geoviProjects;
+      public ObservableCollection<GeoviProject> GeoviProjects
       {
-         get => geoviDatas;
+         get => geoviProjects;
          set
          {
-            geoviDatas = value;
-            OnPropertyChanged(nameof(GeoviDatas));
+            geoviProjects = value;
+            OnPropertyChanged(nameof(GeoviProjects));
          }
       }
 
@@ -46,7 +46,7 @@ namespace Geovi.Net.ViewModels
       public SettingsPageViewModel(INavigationService navigationService, IGeoviDataService geoviDataService)
       {
          this.NavigationService = navigationService;
-         GeoviDatas = geoviDataService.GetAllBy();
+         this.GeoviProjects = geoviDataService.GetAllBy();
          GoToSettingsDetailCommand = new RelayCommand(this.GoToSettingsDetailCommandFunc);
       }
 

@@ -9,7 +9,7 @@ namespace Geovi.Net.IViewModels
 {
    public interface ISettingsPageViewModel
    {
-      ObservableCollection<GeoviDataBy> GeoviDatas { get; set; }
+      ObservableCollection<GeoviProject> GeoviProjects { get; set; }
 
       IEnumerable<int> ZoomLevels { get; set; }
 

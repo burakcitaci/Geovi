@@ -49,10 +49,11 @@
                             <Label Text="Basemap" Style="{StaticResource EntryTitleStyle}" />
                         </StackLayout>
                         <Picker HorizontalOptions="FillAndExpand" 
-                           WidthRequest="50" 
-                            ItemsSource="{Binding Basemaps}"
-                            ItemDisplayBinding="{Binding DisplayName}"
-                           VerticalOptions="Center" />
+                                WidthRequest="50" 
+                                ItemsSource="{Binding Basemaps}"
+                                ItemDisplayBinding="{Binding DisplayName}"
+                                SelectedItem="{Binding SelectedBasemap}"
+                                VerticalOptions="Center" />
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical">
@@ -66,9 +67,10 @@
                                    Style="{StaticResource EntryTitleStyle}" />
                         </StackLayout>
                         <Picker HorizontalOptions="FillAndExpand" 
-                           WidthRequest="50" 
-                           ItemsSource="{Binding Fields}"
-                           VerticalOptions="Center" />
+                                WidthRequest="50" 
+                                ItemsSource="{Binding Fields}"
+                                SelectedItem="{Binding SelectedFieldName}"
+                                VerticalOptions="Center" />
                     </StackLayout>
                     
                     <StackLayout Orientation="Vertical">
@@ -90,7 +92,9 @@
                         <BoxView BackgroundColor="{Binding PickedColor, Mode=TwoWay}" />
                     </StackLayout>
 
-
+                    <StackLayout Orientation="Vertical" VerticalOptions="End">
+                        <Button Text="Save changes" Command="{Binding SaveChangesCommand}" />
+                    </StackLayout>
                     <!--<BoxView BackgroundColor="Red" HeightRequest="1" />-->
                 </StackLayout>
             </Grid>

@@ -10,16 +10,17 @@ namespace Geovi.Net.IViewModels
 {
    public interface IGeoviMainPageViewModel
    {
-      string Title { get; }
-
-      ObservableCollection<GeoviDataBy> GeoviDatas { get; set; }
+      #region Observables
+      ObservableCollection<GeoviProject> GeoviProjects { get; set; }
 
       ObservableCollection<string> GeoviDataByTitle { get; set; }
 
-      string SelectedGeoviData { get; set; }
-      string DeleteIcon { get; }
+      #endregion
 
-      string FavoriteIcon { get; }
+      #region Strings
+      string Title { get; }
+      string SelectedGeoviData { get; set; }
+      #endregion
 
       #region Commands
       ICommand GeoviDataDeleteCommand { get;  set; }

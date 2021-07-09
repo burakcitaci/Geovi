@@ -30,14 +30,14 @@ namespace Geovi.Net.Utils
             basemap = Basemap.CreateImageryWithLabelsVector();
             basemapWrapper.Basemap = basemap;
             dict.Add(basemapWrapper);
-            
+
             basemapWrapper = new BasemapWrapper();
             basemapWrapper.DisplayName = "Dark";
             basemapWrapper.IconPath = "DarkGrayCanvas.png";
             basemap = Basemap.CreateDarkGrayCanvasVector();
             basemapWrapper.Basemap = basemap;
             dict.Add(basemapWrapper);
-            
+
             basemapWrapper = new BasemapWrapper();
             basemap = Basemap.CreateOpenStreetMap();
             basemapWrapper.DisplayName = "Streets";
@@ -60,11 +60,12 @@ namespace Geovi.Net.Utils
             { "White", Color.White }, { "Yellow", Color.Yellow }
         };
 
-      public static ObservableCollection<GeoviDataBy> GeoviDatas = new ObservableCollection<GeoviDataBy>
+      public static ObservableCollection<GeoviData> Datas
+      {
+         get
          {
-            new GeoviDataBy("Layer Name")
+            return new ObservableCollection<GeoviData>
             {
-
                new GeoviData()
                {
                   Title = "Hello World",
@@ -72,77 +73,59 @@ namespace Geovi.Net.Utils
                   ServiceType = Enums.ServiceType.FeatueService,
                   LayerName = "Map",
                   Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. ",
-                  ParentName="Layer Name"
+                  ParentName = "Layer Name"
                },
-                new GeoviData()
+               new GeoviData()
                {
                   Title = "Hello World",
                   ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Verwaltungsgrenzen_RLP/FeatureServer/1"),
                   ServiceType = Enums.ServiceType.FeatueService,
                   LayerName = "Android",
                   Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. ",
+                  ParentName = "Layer Name"
+               },
+            };
+         }
+
+      }
+      public static ObservableCollection<GeoviProject> GeoviDatas = new ObservableCollection<GeoviProject>
+         {
+            new GeoviProject("Layer", new ObservableCollection<GeoviService> {  new GeoviService()
+               {
+                  Title = "Hello World",
+                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/arcgis/rest/services/Verwaltungsgrenzen_RLP/FeatureServer/0"),
+                  //ServiceType = Enums.ServiceType.FeatueService,
+                  LayerName = "Map",
+                  Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. ",
                   ParentName="Layer Name"
                },
-                 new GeoviData()
+                new GeoviService()
+               {
+                  Title = "Hello World",
+                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Verwaltungsgrenzen_RLP/FeatureServer/1"),
+                  //ServiceType = Enums.ServiceType.FeatueService,
+                  LayerName = "Android",
+                  Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. ",
+                  ParentName="Layer Name"
+               },
+                 new GeoviService()
                {
                   Title = "Hello World",
                   ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Verwaltungsgrenzen_RLP/FeatureServer/2"),
-                  ServiceType = Enums.ServiceType.FeatueService,
+                  //ServiceType = Enums.ServiceType.FeatueService,
                   LayerName = "Android",
                   Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. ",
                   ParentName="Layer Name"
                },
-                   new GeoviData()
+                   new GeoviService()
                {
                   Title = "Hello World",
                   ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Verwaltungsgrenzen_RLP/FeatureServer/3"),
-                  ServiceType = Enums.ServiceType.FeatueService,
+                  //ServiceType = Enums.ServiceType.FeatueService,
                   LayerName = "Android",
                   Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam voluptua. ",
                   ParentName="Layer Name"
-               }
-            },
-            new GeoviDataBy("Layer Title")
-            {
-
-               new GeoviData()
-               {
-                  Title = "Hello World",
-                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Bev%c3%b6lkerung_nach_Alter/FeatureServer/0"),
-                  ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Map",
-                  ParentName="Layer Title"
-               },
-                new GeoviData()
-               {
-                  Title = "Hello World",
-                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/Bev%c3%b6lkerung_nach_Alter/FeatureServer/1"),
-                  ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Android",
-                  ParentName="Layer Title"
-               }
-            },
-
-            new GeoviDataBy("Lorem Ipsum")
-            {
-
-               new GeoviData()
-               {
-                  Title = "Hello World",
-                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/EuroGlobalMap_Administrative_Boundaries/FeatureServer/0"),
-                  ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Map",
-                  ParentName="Lorem Ipsum"
-               },
-                new GeoviData()
-               {
-                  Title = "Hello World",
-                  ServiceUrl = new Uri("https://services2.arcgis.com/jUpNdisbWqRpMo35/ArcGIS/rest/services/EuroGlobalMap_Administrative_Boundaries/FeatureServer/1"),
-                  ServiceType = Enums.ServiceType.FeatueService,
-                  LayerName = "Android",
-                  ParentName="Lorem Ipsum"
-               }
-            }
+               } }),
          };
    }
 
@@ -166,11 +149,11 @@ namespace Geovi.Net.Utils
       {
          get
          {
-            
+
             return String.Join(Environment.NewLine, KeyValues.Select(x => String.Format("{0}={1}", x.Key, x.Value)));
          }
       }
-     
+
 
       public override string ToString()
       {
@@ -181,7 +164,7 @@ namespace Geovi.Net.Utils
    public class QuickSettingsWrapper : ObservableCollection<ServiceFeatureTable>
    {
       public ServiceFeatureTable ServiceFeatureTable { get; set; }
-      
+
       public event LayerCheckedEventHandler LayerChecked;
       LayerCheckedEventArgs args = new LayerCheckedEventArgs(false);
       private bool layerChecked = true;
@@ -193,7 +176,7 @@ namespace Geovi.Net.Utils
          }
          set
          {
-            if(LayerChecked != null && layerChecked != value)
+            if (LayerChecked != null && layerChecked != value)
             {
                args.Checked = value;
                LayerChecked(this.ServiceFeatureTable.Layer, args);

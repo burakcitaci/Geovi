@@ -114,8 +114,8 @@ namespace Geovi.Net.ViewModels
             OnPropertyChanged(nameof(IsVisibleChanged1));
          }
       }
-      public GeoviData GeoviData { get; set; }
-      public GeoviDataBy GeoviDatas { get; set; }
+      public GeoviService GeoviService { get; set; }
+      public GeoviProject GeoviProject { get; set; }
 
       private Map esriMap;
       public Map EsriMap
@@ -231,8 +231,8 @@ namespace Geovi.Net.ViewModels
       {
          if (parameters != null && parameters.Length != 0)
          {
-            this.GeoviDatas = parameters[0] as GeoviDataBy;
-            this.Title = this.GeoviDatas.FilterName;
+            this.GeoviProject = parameters[0] as GeoviProject;
+            this.Title = this.GeoviProject.Name;
             this.EsriMap = new Map(this.Basemaps.Last().Basemap);
             this.EsriMap.Loaded += EsriMap_Loaded;
             //this.EsriMap.LoadAsync();
@@ -246,14 +246,14 @@ namespace Geovi.Net.ViewModels
       private void EsriMap_Loaded(object sender, EventArgs e)
       {
         
-         foreach(var data in this.GeoviDatas)
+         foreach(var service in this.GeoviProject)
          {
-            this.LoadServices(data);
+            this.LoadServices(service);
          }
         
       }
 
-      private async void LoadServices(GeoviData geoviData)
+      private async void LoadServices(GeoviService geoviData)
       {
          Uri serviceUri = new Uri(geoviData.ServiceUrl.AbsoluteUri);
          // Initialize a new feature layer
